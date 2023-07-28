@@ -1,7 +1,0 @@
-var $54b93992dd798874aea139b8525c7754$var$ceil = Math.ceil;
-var $54b93992dd798874aea139b8525c7754$var$floor = Math.floor;
-// `ToInteger` abstract operation
-// https://tc39.es/ecma262/#sec-tointeger
-$54b93992dd798874aea139b8525c7754$exports = function(argument) {
-    return isNaN(argument = +argument) ? 0 : (argument > 0 ? $54b93992dd798874aea139b8525c7754$var$floor : $54b93992dd798874aea139b8525c7754$var$ceil)(argument);
-};

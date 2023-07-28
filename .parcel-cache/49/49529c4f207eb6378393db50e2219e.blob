@@ -1,5 +1,0 @@
-import   "e648dd9b77dc51a203836cdc8585a2ae:../internals/an-object";
-$e648dd9b77dc51a203836cdc8585a2ae$exports = function(iterator) {
-    var returnMethod = iterator['return'];
-    if (returnMethod !== undefined) return $e648dd9b77dc51a203836cdc8585a2ae$import$cad8ba314ee735d6(returnMethod.call(iterator)).value;
-};

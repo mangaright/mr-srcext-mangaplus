@@ -1,9 +1,0 @@
-import   "b541dfce5d5c14c29452d0ca2518ec2f:../internals/descriptors";
-import   "b541dfce5d5c14c29452d0ca2518ec2f:../internals/object-define-property";
-import   "b541dfce5d5c14c29452d0ca2518ec2f:../internals/create-property-descriptor";
-$b541dfce5d5c14c29452d0ca2518ec2f$exports = $b541dfce5d5c14c29452d0ca2518ec2f$import$9e95520c426f46b4 ? function(object, key, value) {
-    return $b541dfce5d5c14c29452d0ca2518ec2f$import$4276e2046cfaee3b$ffb27d6bd8d1eb33(object, key, $b541dfce5d5c14c29452d0ca2518ec2f$import$ec93b3e5f64a8991(1, value));
-} : function(object, key, value) {
-    object[key] = value;
-    return object;
-};

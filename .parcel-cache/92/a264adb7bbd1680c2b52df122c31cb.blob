@@ -1,7 +1,0 @@
-import   "e8fd7213747cbe1fa009bcfb5fc1f583:../internals/an-object";
-import   "e8fd7213747cbe1fa009bcfb5fc1f583:../internals/get-iterator-method";
-$e8fd7213747cbe1fa009bcfb5fc1f583$exports = function(it) {
-    var iteratorMethod = $e8fd7213747cbe1fa009bcfb5fc1f583$import$58c00865a7a01291(it);
-    if (typeof iteratorMethod != 'function') throw TypeError(String(it) + ' is not iterable');
-    return $e8fd7213747cbe1fa009bcfb5fc1f583$import$cad8ba314ee735d6(iteratorMethod.call(it));
-};

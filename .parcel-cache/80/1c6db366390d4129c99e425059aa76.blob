@@ -1,5 +1,0 @@
-var $a34b561d612569c40f2426f830d357b0$var$id = 0;
-var $a34b561d612569c40f2426f830d357b0$var$postfix = Math.random();
-$a34b561d612569c40f2426f830d357b0$exports = function(key) {
-    return 'Symbol(' + String(key === undefined ? '' : key) + ')_' + ((++$a34b561d612569c40f2426f830d357b0$var$id) + $a34b561d612569c40f2426f830d357b0$var$postfix).toString(36);
-};

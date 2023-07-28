@@ -1,6 +1,0 @@
-import   "f115f670a99f7b2b1d8881ae359b78d3:../internals/well-known-symbol";
-var $f115f670a99f7b2b1d8881ae359b78d3$var$TO_STRING_TAG = $f115f670a99f7b2b1d8881ae359b78d3$import$88242bc6a9673a44('toStringTag');
-var $f115f670a99f7b2b1d8881ae359b78d3$var$test = {
-};
-$f115f670a99f7b2b1d8881ae359b78d3$var$test[$f115f670a99f7b2b1d8881ae359b78d3$var$TO_STRING_TAG] = 'z';
-$f115f670a99f7b2b1d8881ae359b78d3$exports = String($f115f670a99f7b2b1d8881ae359b78d3$var$test) === '[object z]';

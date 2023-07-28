@@ -1,8 +1,0 @@
-import   "3744ba11a926b18a8f70fe620707abba:../internals/fails";
-$3744ba11a926b18a8f70fe620707abba$exports = !$3744ba11a926b18a8f70fe620707abba$import$9936d02511e757dc(function() {
-    function F() {
-    }
-    F.prototype.constructor = null;
-    // eslint-disable-next-line es/no-object-getprototypeof -- required for testing
-    return Object.getPrototypeOf(new F()) !== F.prototype;
-});

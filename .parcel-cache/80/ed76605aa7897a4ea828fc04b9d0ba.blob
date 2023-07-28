@@ -1,4 +1,0 @@
-$8fce20ab81177434724d964f0d1790e6$exports = function(it, Constructor, name) {
-    if (!(it instanceof Constructor)) throw TypeError('Incorrect ' + (name ? name + ' ' : '') + 'invocation');
-    return it;
-};

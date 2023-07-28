@@ -1,4 +1,0 @@
-import   "5e737c4592275741da5894d726e0cdc5:../internals/global";
-import   "5e737c4592275741da5894d726e0cdc5:../internals/inspect-source";
-var $5e737c4592275741da5894d726e0cdc5$var$WeakMap = $5e737c4592275741da5894d726e0cdc5$import$da678c04728da253$b46c52e11593a594;
-$5e737c4592275741da5894d726e0cdc5$exports = typeof $5e737c4592275741da5894d726e0cdc5$var$WeakMap === 'function' && /native code/.test($5e737c4592275741da5894d726e0cdc5$import$f7efd47fd30433a1($5e737c4592275741da5894d726e0cdc5$var$WeakMap));

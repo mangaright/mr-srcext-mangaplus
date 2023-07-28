@@ -1,2 +1,0 @@
-import   "1cfc13e1470ad6fe65489f35b627de3b:../internals/get-built-in";
-$1cfc13e1470ad6fe65489f35b627de3b$exports = $1cfc13e1470ad6fe65489f35b627de3b$import$acc15958b3da080('document', 'documentElement');

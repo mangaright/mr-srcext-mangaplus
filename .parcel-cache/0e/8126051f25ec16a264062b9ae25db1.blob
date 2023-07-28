@@ -1,2 +1,0 @@
-import   "6cde544b5b61a997b76e8b2b6f9447c9:../internals/get-built-in";
-$6cde544b5b61a997b76e8b2b6f9447c9$exports = $6cde544b5b61a997b76e8b2b6f9447c9$import$acc15958b3da080('navigator', 'userAgent') || '';

@@ -14,13 +14,14 @@
     "mangaright-source"
   ],
   "devDependencies": {
+    "@babel/core": "7.17.12",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/preset-flow": "^7.22.5",
-    "babel-core": "^7.0.0-0",
     "babel-preset-env": "^1.7.0",
     "flow": "^0.2.3",
     "flow-bin": "^0.211.1",
     "node-fetch": "2",
-    "parcel": "<2.0.0",
+    "parcel": "1.12.3",
     "parcel-bundler": "^1.12.5",
     "regenerator-runtime": "^0.11.1",
     "yarn": "^1.22.19"

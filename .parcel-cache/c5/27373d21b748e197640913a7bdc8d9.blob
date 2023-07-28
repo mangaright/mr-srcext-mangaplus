@@ -1,6 +1,0 @@
-import   "92ac2a029b259fa3125de75b6d32db8d:../internals/require-object-coercible";
-// `ToObject` abstract operation
-// https://tc39.es/ecma262/#sec-toobject
-$92ac2a029b259fa3125de75b6d32db8d$exports = function(argument) {
-    return Object($92ac2a029b259fa3125de75b6d32db8d$import$cb96119f17424999(argument));
-};

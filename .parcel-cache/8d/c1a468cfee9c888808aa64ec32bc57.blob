@@ -1,9 +1,0 @@
-import   "4e7a633b6e8fa82d18752d60e0f1dabb:../internals/global";
-import   "4e7a633b6e8fa82d18752d60e0f1dabb:../internals/is-object";
-var $4e7a633b6e8fa82d18752d60e0f1dabb$var$document = $4e7a633b6e8fa82d18752d60e0f1dabb$import$da678c04728da253$85c2145e6b81e46c;
-// typeof document.createElement is 'object' in old IE
-var $4e7a633b6e8fa82d18752d60e0f1dabb$var$EXISTS = $4e7a633b6e8fa82d18752d60e0f1dabb$import$9294ccec169e68b9($4e7a633b6e8fa82d18752d60e0f1dabb$var$document) && $4e7a633b6e8fa82d18752d60e0f1dabb$import$9294ccec169e68b9($4e7a633b6e8fa82d18752d60e0f1dabb$var$document.createElement);
-$4e7a633b6e8fa82d18752d60e0f1dabb$exports = function(it) {
-    return $4e7a633b6e8fa82d18752d60e0f1dabb$var$EXISTS ? $4e7a633b6e8fa82d18752d60e0f1dabb$var$document.createElement(it) : {
-    };
-};

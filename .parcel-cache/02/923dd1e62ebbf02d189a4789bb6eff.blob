@@ -1,7 +1,0 @@
-import   "263efac8df6b8c3775ffd37e6780a136:../internals/classof";
-import   "263efac8df6b8c3775ffd37e6780a136:../internals/iterators";
-import   "263efac8df6b8c3775ffd37e6780a136:../internals/well-known-symbol";
-var $263efac8df6b8c3775ffd37e6780a136$var$ITERATOR = $263efac8df6b8c3775ffd37e6780a136$import$88242bc6a9673a44('iterator');
-$263efac8df6b8c3775ffd37e6780a136$exports = function(it) {
-    if (it != undefined) return it[$263efac8df6b8c3775ffd37e6780a136$var$ITERATOR] || it['@@iterator'] || $263efac8df6b8c3775ffd37e6780a136$import$617293915b6aef2[$263efac8df6b8c3775ffd37e6780a136$import$2c88fa3abfc1c398(it)];
-};

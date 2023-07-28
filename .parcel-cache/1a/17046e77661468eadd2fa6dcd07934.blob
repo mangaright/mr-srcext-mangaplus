@@ -1,3 +1,0 @@
-// eslint-disable-next-line es/no-object-getownpropertysymbols -- safe
-var $00d8eb3ed46ae84c1cd0ff3dfdbecf05$export$ffb27d6bd8d1eb33;
-$00d8eb3ed46ae84c1cd0ff3dfdbecf05$export$ffb27d6bd8d1eb33 = Object.getOwnPropertySymbols;

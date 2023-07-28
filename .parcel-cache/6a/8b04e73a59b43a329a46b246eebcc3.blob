@@ -1,7 +1,0 @@
-import   "b6a589b9bce7d01a9fc922a3c908199b:../internals/to-integer";
-var $b6a589b9bce7d01a9fc922a3c908199b$var$min = Math.min;
-// `ToLength` abstract operation
-// https://tc39.es/ecma262/#sec-tolength
-$b6a589b9bce7d01a9fc922a3c908199b$exports = function(argument) {
-    return argument > 0 ? $b6a589b9bce7d01a9fc922a3c908199b$var$min($b6a589b9bce7d01a9fc922a3c908199b$import$3760fb9e29f29d49(argument), 9007199254740991) : 0; // 2 ** 53 - 1 == 9007199254740991
-};

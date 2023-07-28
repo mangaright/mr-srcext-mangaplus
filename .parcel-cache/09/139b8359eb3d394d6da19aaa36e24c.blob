@@ -1,5 +1,0 @@
-import   "fa082d03897533869e102c17f93b3b54:../internals/is-object";
-$fa082d03897533869e102c17f93b3b54$exports = function(it) {
-    if (!$fa082d03897533869e102c17f93b3b54$import$9294ccec169e68b9(it)) throw TypeError(String(it) + ' is not an object');
-    return it;
-};

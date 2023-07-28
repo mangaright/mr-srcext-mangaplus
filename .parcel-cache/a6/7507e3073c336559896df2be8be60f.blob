@@ -1,6 +1,0 @@
-import   "9eb0a1f015027aa891e4e90fe294a736:../internals/to-object";
-var $9eb0a1f015027aa891e4e90fe294a736$var$hasOwnProperty = {
-}.hasOwnProperty;
-$9eb0a1f015027aa891e4e90fe294a736$exports = Object.hasOwn || function hasOwn(it, key) {
-    return $9eb0a1f015027aa891e4e90fe294a736$var$hasOwnProperty.call($9eb0a1f015027aa891e4e90fe294a736$import$565dce0892f29b05(it), key);
-};

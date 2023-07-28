@@ -1,5 +1,0 @@
-var $22575071d9c33fe79cdf03f670885306$var$toString = {
-}.toString;
-$22575071d9c33fe79cdf03f670885306$exports = function(it) {
-    return $22575071d9c33fe79cdf03f670885306$var$toString.call(it).slice(8, -1);
-};

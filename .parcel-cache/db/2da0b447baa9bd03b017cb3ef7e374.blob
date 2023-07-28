@@ -1,5 +1,0 @@
-import   "c3ad28c326150c4f13d0eabf09fd2d1f:../internals/indexed-object";
-import   "c3ad28c326150c4f13d0eabf09fd2d1f:../internals/require-object-coercible";
-$c3ad28c326150c4f13d0eabf09fd2d1f$exports = function(it) {
-    return $c3ad28c326150c4f13d0eabf09fd2d1f$import$b563c836d980da8e($c3ad28c326150c4f13d0eabf09fd2d1f$import$cb96119f17424999(it));
-};
