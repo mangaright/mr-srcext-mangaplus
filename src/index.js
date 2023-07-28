@@ -4,6 +4,8 @@ import "core-js/features/url";
 
 const { distance } = require('fastest-levenshtein')
 
+export let EXTENSION_ID="641c55ca-ff9b-4279-9278-fd304aba6aad";
+
 class ChapterListItem {
     number: string;
     // Number is the chapter number. Could be an actual number like "1" or could
