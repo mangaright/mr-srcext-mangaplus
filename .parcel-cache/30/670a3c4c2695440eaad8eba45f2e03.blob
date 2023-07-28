@@ -1,0 +1,15 @@
+import   "258e8a315388f4361faa920d66a5361c:../internals/well-known-symbol";
+import   "258e8a315388f4361faa920d66a5361c:../internals/object-create";
+import   "258e8a315388f4361faa920d66a5361c:../internals/object-define-property";
+var $258e8a315388f4361faa920d66a5361c$var$UNSCOPABLES = $258e8a315388f4361faa920d66a5361c$import$88242bc6a9673a44('unscopables');
+var $258e8a315388f4361faa920d66a5361c$var$ArrayPrototype = Array.prototype;
+// Array.prototype[@@unscopables]
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+if ($258e8a315388f4361faa920d66a5361c$var$ArrayPrototype[$258e8a315388f4361faa920d66a5361c$var$UNSCOPABLES] == undefined) $258e8a315388f4361faa920d66a5361c$import$4276e2046cfaee3b$ffb27d6bd8d1eb33($258e8a315388f4361faa920d66a5361c$var$ArrayPrototype, $258e8a315388f4361faa920d66a5361c$var$UNSCOPABLES, {
+    configurable: true,
+    value: $258e8a315388f4361faa920d66a5361c$import$d8db146559ed3979(null)
+});
+// add a key to Array.prototype[@@unscopables]
+$258e8a315388f4361faa920d66a5361c$exports = function(key) {
+    $258e8a315388f4361faa920d66a5361c$var$ArrayPrototype[$258e8a315388f4361faa920d66a5361c$var$UNSCOPABLES][key] = true;
+};

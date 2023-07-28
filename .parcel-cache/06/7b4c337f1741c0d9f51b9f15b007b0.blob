@@ -1,0 +1,6 @@
+import   "ae7e749d7245c8d3f936338e8319eea4:../internals/shared";
+import   "ae7e749d7245c8d3f936338e8319eea4:../internals/uid";
+var $ae7e749d7245c8d3f936338e8319eea4$var$keys = $ae7e749d7245c8d3f936338e8319eea4$import$814db69a6e0038df('keys');
+$ae7e749d7245c8d3f936338e8319eea4$exports = function(key) {
+    return $ae7e749d7245c8d3f936338e8319eea4$var$keys[key] || ($ae7e749d7245c8d3f936338e8319eea4$var$keys[key] = $ae7e749d7245c8d3f936338e8319eea4$import$865304611243ad06(key));
+};

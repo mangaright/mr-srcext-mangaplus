@@ -1,0 +1,16 @@
+import   "b71ee990b94d31fdb3c6c67b33b8b4c5:../internals/global";
+import   "b71ee990b94d31fdb3c6c67b33b8b4c5:../internals/shared";
+import   "b71ee990b94d31fdb3c6c67b33b8b4c5:../internals/has";
+import   "b71ee990b94d31fdb3c6c67b33b8b4c5:../internals/uid";
+import   "b71ee990b94d31fdb3c6c67b33b8b4c5:../internals/native-symbol";
+import   "b71ee990b94d31fdb3c6c67b33b8b4c5:../internals/use-symbol-as-uid";
+var $b71ee990b94d31fdb3c6c67b33b8b4c5$var$WellKnownSymbolsStore = $b71ee990b94d31fdb3c6c67b33b8b4c5$import$814db69a6e0038df('wks');
+var $b71ee990b94d31fdb3c6c67b33b8b4c5$var$Symbol = $b71ee990b94d31fdb3c6c67b33b8b4c5$import$da678c04728da253$9e87a1b4d774f74;
+var $b71ee990b94d31fdb3c6c67b33b8b4c5$var$createWellKnownSymbol = $b71ee990b94d31fdb3c6c67b33b8b4c5$import$d0efad933018ad05 ? $b71ee990b94d31fdb3c6c67b33b8b4c5$var$Symbol : $b71ee990b94d31fdb3c6c67b33b8b4c5$var$Symbol && $b71ee990b94d31fdb3c6c67b33b8b4c5$var$Symbol.withoutSetter || $b71ee990b94d31fdb3c6c67b33b8b4c5$import$865304611243ad06;
+$b71ee990b94d31fdb3c6c67b33b8b4c5$exports = function(name) {
+    if (!$b71ee990b94d31fdb3c6c67b33b8b4c5$import$7e2f6fc726b1debe($b71ee990b94d31fdb3c6c67b33b8b4c5$var$WellKnownSymbolsStore, name) || !($b71ee990b94d31fdb3c6c67b33b8b4c5$import$4e2d447df5be34c || typeof $b71ee990b94d31fdb3c6c67b33b8b4c5$var$WellKnownSymbolsStore[name] == 'string')) {
+        if ($b71ee990b94d31fdb3c6c67b33b8b4c5$import$4e2d447df5be34c && $b71ee990b94d31fdb3c6c67b33b8b4c5$import$7e2f6fc726b1debe($b71ee990b94d31fdb3c6c67b33b8b4c5$var$Symbol, name)) $b71ee990b94d31fdb3c6c67b33b8b4c5$var$WellKnownSymbolsStore[name] = $b71ee990b94d31fdb3c6c67b33b8b4c5$var$Symbol[name];
+        else $b71ee990b94d31fdb3c6c67b33b8b4c5$var$WellKnownSymbolsStore[name] = $b71ee990b94d31fdb3c6c67b33b8b4c5$var$createWellKnownSymbol('Symbol.' + name);
+    }
+    return $b71ee990b94d31fdb3c6c67b33b8b4c5$var$WellKnownSymbolsStore[name];
+};

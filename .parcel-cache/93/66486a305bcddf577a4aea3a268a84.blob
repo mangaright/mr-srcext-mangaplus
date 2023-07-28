@@ -1,0 +1,8 @@
+import   "a945e54e3121edcf11bdf406a1bb441e:../internals/well-known-symbol";
+import   "a945e54e3121edcf11bdf406a1bb441e:../internals/iterators";
+var $a945e54e3121edcf11bdf406a1bb441e$var$ITERATOR = $a945e54e3121edcf11bdf406a1bb441e$import$88242bc6a9673a44('iterator');
+var $a945e54e3121edcf11bdf406a1bb441e$var$ArrayPrototype = Array.prototype;
+// check on default Array iterator
+$a945e54e3121edcf11bdf406a1bb441e$exports = function(it) {
+    return it !== undefined && ($a945e54e3121edcf11bdf406a1bb441e$import$617293915b6aef2$d4a625febc06a234 === it || $a945e54e3121edcf11bdf406a1bb441e$var$ArrayPrototype[$a945e54e3121edcf11bdf406a1bb441e$var$ITERATOR] === it);
+};

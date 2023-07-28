@@ -1,0 +1,130 @@
+import   "d3dfc027196df876626c47bef188877c:core-js/features/url";
+import   "d3dfc027196df876626c47bef188877c:fastest-levenshtein";
+var $d3dfc027196df876626c47bef188877c$require$distance = $d3dfc027196df876626c47bef188877c$import$5a353dd08f2362aa$d4cadb6bf5b49eb;
+class $d3dfc027196df876626c47bef188877c$var$ChapterListItem {
+    number = "";
+    // Number is the chapter number. Could be an actual number like "1" or could
+    // be a special chapter like "EX" or "Omake".
+    //
+    title = "";
+    // Name is the short title of the chapter.
+    // 
+    description = "";
+    // Description is the longer description of the chapter. May be blank
+    // depending on the way the website handles information about chapters.
+    // 
+    identifier = "";
+    // Identifier is a source-specific identifier. Could be an id like "1234" or
+    // anything that makes sense for this source. This identifier will be
+    // provided in getChapter call as chapterIdentifier to retrieve the chapter
+    // pages.
+    // 
+    constructor({ number: number1 , identifier: identifier1  }){
+        this.number = number1;
+        this.identifier = identifier1;
+    }
+}
+class $d3dfc027196df876626c47bef188877c$var$ChapterList {
+    chapters = [];
+    // Chapters contains all the chapters for a given manga series.
+    // 
+    addChapter(number, identifier) {
+        const newChapter = $d3dfc027196df876626c47bef188877c$var$ChapterListItem({
+            number: number,
+            identifier: identifier
+        });
+        this.chapters.push(newChapter);
+    }
+}
+class $d3dfc027196df876626c47bef188877c$var$ChapterData {
+    pageUrls = [];
+    // PageUrls contains all the page urls for the chapter.
+    pageUrlsLow = null;
+    // pageUrlsLow contains all the low-data or low-res page urls.
+    constructor({ pageUrls: pageUrls , pageUrlsLow: pageUrlsLow = null  }){
+        this.pageUrls = pageUrls;
+        this.pageUrlsLow = pageUrlsLow;
+    }
+}
+class $d3dfc027196df876626c47bef188877c$var$MangaSeries {
+    name = "";
+    // Name is the name of the manga series.
+    // 
+    identifier = "";
+    // Identifier is the id or unique identifier for this manga series on this
+    // source.
+    // 
+    ranking = -1;
+    // Ranking is the a representation of the likelyhood of this result being
+    // the correct match. 0 being the best match and Number.MAX_SAFE_INTEGER
+    // being the worst match. All negative numbers will be treated as equal.
+    // 
+    constructor({ name: name1 , identifier: identifier2 , ranking: ranking1 = -1  }){
+        this.name = name1;
+        this.identifier = identifier2;
+        this.ranking = ranking1;
+    }
+}
+class $d3dfc027196df876626c47bef188877c$var$MangaSeriesList {
+    results = [];
+    // Results is the list of all MangaSeries objects which match this query in
+    // a searchManga call.
+    constructor({ results: results = []  }){
+        this.results = results;
+    }
+    addResult({ name: name , identifier: identifier , ranking: ranking = -1  }) {
+        this.results.push($d3dfc027196df876626c47bef188877c$var$MangaSeries({
+            name: name,
+            identifier: identifier
+        }));
+    }
+}
+const $d3dfc027196df876626c47bef188877c$var$baseUrl = "https://jumpg-webapi.tokyo-cdn.com/api";
+function $d3dfc027196df876626c47bef188877c$var$filterManga(query, mangaList) {
+    const distances = mangaList.map((x)=>($d3dfc027196df876626c47bef188877c$require$distance(query, x.name), x)
+    );
+    const top3 = distances.sort((x, y)=>x[0] - y[0]
+    ).slice(0, 3);
+    return top3.map((x)=>x[1]
+    );
+}
+async function $d3dfc027196df876626c47bef188877c$export$3effb8d9671e18c(seriesName) {
+    let finalUrl = new URL(`${$d3dfc027196df876626c47bef188877c$var$baseUrl}/title_list/allV2`);
+    const searchParams = new URLSearchParams({
+        format: "json"
+    });
+    finalUrl.search = searchParams.toString();
+    const response = await fetch(finalUrl);
+    const json = await response.json();
+    const formatted = json.success.allTitlesViewV2.AllTitlesGroup.reduce((accum, data)=>{
+        // NOTE: No language is english for MangaPlus
+        // 
+        const engTitle = data.titles.find((title)=>!title.language
+        );
+        if (!engTitle) return accum;
+        return accum + [
+            Mangaseries({
+                identifier: engTitle.titleId,
+                name: engTitle.theTitle,
+                coverUrl: engTitle.portraitImageUrl
+            })
+        ];
+    });
+    const filtered = $d3dfc027196df876626c47bef188877c$var$filterManga(seriesName, formatted);
+    return new MangaseriesList({
+        results: filtered
+    });
+}
+function $d3dfc027196df876626c47bef188877c$var$listChapters(seriesIdentifier) {
+    const chapterList = $d3dfc027196df876626c47bef188877c$var$ChapterList();
+    // TODO: Implement list chapters logic here.
+    return JSON.stringify(chapterList);
+}
+function $d3dfc027196df876626c47bef188877c$var$getChapter(chapterIdentifier) {
+    let pageUrls1 = [];
+    // TODO: implement get chapter logic here.
+    const chapterData = $d3dfc027196df876626c47bef188877c$var$ChapterData({
+        pageUrls: pageUrls1
+    });
+    return JSON.stringify(chapterData);
+}

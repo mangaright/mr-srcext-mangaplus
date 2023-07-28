@@ -1,0 +1,7 @@
+$6f045e70f0b2ee6b990770a78ca0d641$exports = function(exec) {
+    try {
+        return !!exec();
+    } catch (error) {
+        return true;
+    }
+};

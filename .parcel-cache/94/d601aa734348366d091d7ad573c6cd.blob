@@ -1,0 +1,952 @@
+'use strict';
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../modules/es.string.iterator";
+// TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
+$2041ac0ea5d0446d77b43707bbec7e9d$import$294c20d74677e051;
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/export";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/descriptors";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/native-url";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/global";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/object-define-properties";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/redefine";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/an-instance";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/has";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/object-assign";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/array-from";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/string-multibyte";
+var $2041ac0ea5d0446d77b43707bbec7e9d$require$codeAt = $2041ac0ea5d0446d77b43707bbec7e9d$import$98a666e19560cc99$1a8edfccf784f1f6;
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/string-punycode-to-ascii";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/set-to-string-tag";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../modules/web.url-search-params";
+import   "2041ac0ea5d0446d77b43707bbec7e9d:../internals/internal-state";
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$NativeURL = $2041ac0ea5d0446d77b43707bbec7e9d$import$da678c04728da253$fa9de30f70c9b1eb;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$URLSearchParams = $2041ac0ea5d0446d77b43707bbec7e9d$import$d58a7fbb5d4c3c81$e3446d617968558a;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalSearchParamsState = $2041ac0ea5d0446d77b43707bbec7e9d$import$d58a7fbb5d4c3c81$65568621dffb497b;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$setInternalState = $2041ac0ea5d0446d77b43707bbec7e9d$import$2c03d954288482bc$77f8d2fc923b14e3;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState = $2041ac0ea5d0446d77b43707bbec7e9d$import$2c03d954288482bc$41aa07b58faf19b8('URL');
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$floor = Math.floor;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$pow = Math.pow;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_AUTHORITY = 'Invalid authority';
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_SCHEME = 'Invalid scheme';
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_HOST = 'Invalid host';
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_PORT = 'Invalid port';
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$ALPHA = /[A-Za-z]/;
+// eslint-disable-next-line regexp/no-obscure-range -- safe
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$ALPHANUMERIC = /[\d+-.A-Za-z]/;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$DIGIT = /\d/;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$HEX_START = /^0x/i;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$OCT = /^[0-7]+$/;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$DEC = /^\d+$/;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$HEX = /^[\dA-Fa-f]+$/;
+/* eslint-disable no-control-regex -- safe */ var $2041ac0ea5d0446d77b43707bbec7e9d$var$FORBIDDEN_HOST_CODE_POINT = /[\0\t\n\r #%/:<>?@[\\\]^|]/;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$FORBIDDEN_HOST_CODE_POINT_EXCLUDING_PERCENT = /[\0\t\n\r #/:<>?@[\\\]^|]/;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$LEADING_AND_TRAILING_C0_CONTROL_OR_SPACE = /^[\u0000-\u001F ]+|[\u0000-\u001F ]+$/g;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$TAB_AND_NEW_LINE = /[\t\n\r]/g;
+/* eslint-enable no-control-regex -- safe */ var $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$parseHost = function(url, input) {
+    var result, codePoints, index;
+    if (input.charAt(0) == '[') {
+        if (input.charAt(input.length - 1) != ']') return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_HOST;
+        result = $2041ac0ea5d0446d77b43707bbec7e9d$var$parseIPv6(input.slice(1, -1));
+        if (!result) return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_HOST;
+        url.host = result;
+    // opaque host
+    } else if (!$2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url)) {
+        if ($2041ac0ea5d0446d77b43707bbec7e9d$var$FORBIDDEN_HOST_CODE_POINT_EXCLUDING_PERCENT.test(input)) return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_HOST;
+        result = '';
+        codePoints = $2041ac0ea5d0446d77b43707bbec7e9d$import$a27e793652f6d51f(input);
+        for(index = 0; index < codePoints.length; index++)result += $2041ac0ea5d0446d77b43707bbec7e9d$var$percentEncode(codePoints[index], $2041ac0ea5d0446d77b43707bbec7e9d$var$C0ControlPercentEncodeSet);
+        url.host = result;
+    } else {
+        input = $2041ac0ea5d0446d77b43707bbec7e9d$import$6e03dd3a3f1fc226(input);
+        if ($2041ac0ea5d0446d77b43707bbec7e9d$var$FORBIDDEN_HOST_CODE_POINT.test(input)) return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_HOST;
+        result = $2041ac0ea5d0446d77b43707bbec7e9d$var$parseIPv4(input);
+        if (result === null) return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_HOST;
+        url.host = result;
+    }
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$parseIPv4 = function(input) {
+    var parts = input.split('.');
+    var partsLength, numbers, index, part, radix, number, ipv4;
+    if (parts.length && parts[parts.length - 1] == '') parts.pop();
+    partsLength = parts.length;
+    if (partsLength > 4) return input;
+    numbers = [];
+    for(index = 0; index < partsLength; index++){
+        part = parts[index];
+        if (part == '') return input;
+        radix = 10;
+        if (part.length > 1 && part.charAt(0) == '0') {
+            radix = $2041ac0ea5d0446d77b43707bbec7e9d$var$HEX_START.test(part) ? 16 : 8;
+            part = part.slice(radix == 8 ? 1 : 2);
+        }
+        if (part === '') number = 0;
+        else {
+            if (!(radix == 10 ? $2041ac0ea5d0446d77b43707bbec7e9d$var$DEC : radix == 8 ? $2041ac0ea5d0446d77b43707bbec7e9d$var$OCT : $2041ac0ea5d0446d77b43707bbec7e9d$var$HEX).test(part)) return input;
+            number = parseInt(part, radix);
+        }
+        numbers.push(number);
+    }
+    for(index = 0; index < partsLength; index++){
+        number = numbers[index];
+        if (index == partsLength - 1) {
+            if (number >= $2041ac0ea5d0446d77b43707bbec7e9d$var$pow(256, 5 - partsLength)) return null;
+        } else if (number > 255) return null;
+    }
+    ipv4 = numbers.pop();
+    for(index = 0; index < numbers.length; index++)ipv4 += numbers[index] * $2041ac0ea5d0446d77b43707bbec7e9d$var$pow(256, 3 - index);
+    return ipv4;
+};
+// eslint-disable-next-line max-statements -- TODO
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$parseIPv6 = function(input) {
+    var address = [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ];
+    var pieceIndex = 0;
+    var compress = null;
+    var pointer = 0;
+    var value, length, numbersSeen, ipv4Piece, number, swaps, swap;
+    var char = function() {
+        return input.charAt(pointer);
+    };
+    if (char() == ':') {
+        if (input.charAt(1) != ':') return;
+        pointer += 2;
+        pieceIndex++;
+        compress = pieceIndex;
+    }
+    while(char()){
+        if (pieceIndex == 8) return;
+        if (char() == ':') {
+            if (compress !== null) return;
+            pointer++;
+            pieceIndex++;
+            compress = pieceIndex;
+            continue;
+        }
+        value = length = 0;
+        while(length < 4 && $2041ac0ea5d0446d77b43707bbec7e9d$var$HEX.test(char())){
+            value = value * 16 + parseInt(char(), 16);
+            pointer++;
+            length++;
+        }
+        if (char() == '.') {
+            if (length == 0) return;
+            pointer -= length;
+            if (pieceIndex > 6) return;
+            numbersSeen = 0;
+            while(char()){
+                ipv4Piece = null;
+                if (numbersSeen > 0) {
+                    if (char() == '.' && numbersSeen < 4) pointer++;
+                    else return;
+                }
+                if (!$2041ac0ea5d0446d77b43707bbec7e9d$var$DIGIT.test(char())) return;
+                while($2041ac0ea5d0446d77b43707bbec7e9d$var$DIGIT.test(char())){
+                    number = parseInt(char(), 10);
+                    if (ipv4Piece === null) ipv4Piece = number;
+                    else if (ipv4Piece == 0) return;
+                    else ipv4Piece = ipv4Piece * 10 + number;
+                    if (ipv4Piece > 255) return;
+                    pointer++;
+                }
+                address[pieceIndex] = address[pieceIndex] * 256 + ipv4Piece;
+                numbersSeen++;
+                if (numbersSeen == 2 || numbersSeen == 4) pieceIndex++;
+            }
+            if (numbersSeen != 4) return;
+            break;
+        } else if (char() == ':') {
+            pointer++;
+            if (!char()) return;
+        } else if (char()) return;
+        address[pieceIndex++] = value;
+    }
+    if (compress !== null) {
+        swaps = pieceIndex - compress;
+        pieceIndex = 7;
+        while(pieceIndex != 0 && swaps > 0){
+            swap = address[pieceIndex];
+            address[pieceIndex--] = address[compress + swaps - 1];
+            address[compress + --swaps] = swap;
+        }
+    } else if (pieceIndex != 8) return;
+    return address;
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$findLongestZeroSequence = function(ipv6) {
+    var maxIndex = null;
+    var maxLength = 1;
+    var currStart = null;
+    var currLength = 0;
+    var index = 0;
+    for(; index < 8; index++)if (ipv6[index] !== 0) {
+        if (currLength > maxLength) {
+            maxIndex = currStart;
+            maxLength = currLength;
+        }
+        currStart = null;
+        currLength = 0;
+    } else {
+        if (currStart === null) currStart = index;
+        ++currLength;
+    }
+    if (currLength > maxLength) {
+        maxIndex = currStart;
+        maxLength = currLength;
+    }
+    return maxIndex;
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$serializeHost = function(host) {
+    var result, index, compress, ignore0;
+    // ipv4
+    if (typeof host == 'number') {
+        result = [];
+        for(index = 0; index < 4; index++){
+            result.unshift(host % 256);
+            host = $2041ac0ea5d0446d77b43707bbec7e9d$var$floor(host / 256);
+        }
+        return result.join('.');
+    // ipv6
+    } else if (typeof host == 'object') {
+        result = '';
+        compress = $2041ac0ea5d0446d77b43707bbec7e9d$var$findLongestZeroSequence(host);
+        for(index = 0; index < 8; index++){
+            if (ignore0 && host[index] === 0) continue;
+            if (ignore0) ignore0 = false;
+            if (compress === index) {
+                result += index ? ':' : '::';
+                ignore0 = true;
+            } else {
+                result += host[index].toString(16);
+                if (index < 7) result += ':';
+            }
+        }
+        return '[' + result + ']';
+    }
+    return host;
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$C0ControlPercentEncodeSet = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$fragmentPercentEncodeSet = $2041ac0ea5d0446d77b43707bbec7e9d$import$c5b2e802ed758358({
+}, $2041ac0ea5d0446d77b43707bbec7e9d$var$C0ControlPercentEncodeSet, {
+    ' ': 1,
+    '"': 1,
+    '<': 1,
+    '>': 1,
+    '`': 1
+});
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$pathPercentEncodeSet = $2041ac0ea5d0446d77b43707bbec7e9d$import$c5b2e802ed758358({
+}, $2041ac0ea5d0446d77b43707bbec7e9d$var$fragmentPercentEncodeSet, {
+    '#': 1,
+    '?': 1,
+    '{': 1,
+    '}': 1
+});
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$userinfoPercentEncodeSet = $2041ac0ea5d0446d77b43707bbec7e9d$import$c5b2e802ed758358({
+}, $2041ac0ea5d0446d77b43707bbec7e9d$var$pathPercentEncodeSet, {
+    '/': 1,
+    ':': 1,
+    ';': 1,
+    '=': 1,
+    '@': 1,
+    '[': 1,
+    '\\': 1,
+    ']': 1,
+    '^': 1,
+    '|': 1
+});
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$percentEncode = function(char, set) {
+    var code = $2041ac0ea5d0446d77b43707bbec7e9d$require$codeAt(char, 0);
+    return code > 32 && code < 127 && !$2041ac0ea5d0446d77b43707bbec7e9d$import$7e2f6fc726b1debe(set, char) ? char : encodeURIComponent(char);
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$specialSchemes = {
+    ftp: 21,
+    file: null,
+    http: 80,
+    https: 443,
+    ws: 80,
+    wss: 443
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial = function(url) {
+    return $2041ac0ea5d0446d77b43707bbec7e9d$import$7e2f6fc726b1debe($2041ac0ea5d0446d77b43707bbec7e9d$var$specialSchemes, url.scheme);
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$includesCredentials = function(url) {
+    return url.username != '' || url.password != '';
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$cannotHaveUsernamePasswordPort = function(url) {
+    return !url.host || url.cannotBeABaseURL || url.scheme == 'file';
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$isWindowsDriveLetter = function(string, normalized) {
+    var second;
+    return string.length == 2 && $2041ac0ea5d0446d77b43707bbec7e9d$var$ALPHA.test(string.charAt(0)) && ((second = string.charAt(1)) == ':' || !normalized && second == '|');
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$startsWithWindowsDriveLetter = function(string) {
+    var third;
+    return string.length > 1 && $2041ac0ea5d0446d77b43707bbec7e9d$var$isWindowsDriveLetter(string.slice(0, 2)) && (string.length == 2 || (third = string.charAt(2)) === '/' || third === '\\' || third === '?' || third === '#');
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$shortenURLsPath = function(url) {
+    var path = url.path;
+    var pathSize = path.length;
+    if (pathSize && (url.scheme != 'file' || pathSize != 1 || !$2041ac0ea5d0446d77b43707bbec7e9d$var$isWindowsDriveLetter(path[0], true))) path.pop();
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$isSingleDot = function(segment) {
+    return segment === '.' || segment.toLowerCase() === '%2e';
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$isDoubleDot = function(segment) {
+    segment = segment.toLowerCase();
+    return segment === '..' || segment === '%2e.' || segment === '.%2e' || segment === '%2e%2e';
+};
+// States:
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$SCHEME_START = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$SCHEME = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$NO_SCHEME = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$SPECIAL_RELATIVE_OR_AUTHORITY = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH_OR_AUTHORITY = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$RELATIVE = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$RELATIVE_SLASH = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$SPECIAL_AUTHORITY_SLASHES = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$SPECIAL_AUTHORITY_IGNORE_SLASHES = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$AUTHORITY = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$HOST = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$HOSTNAME = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$PORT = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$FILE = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$FILE_SLASH = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$FILE_HOST = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH_START = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$CANNOT_BE_A_BASE_URL_PATH = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$QUERY = {
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$FRAGMENT = {
+};
+// eslint-disable-next-line max-statements -- TODO
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$parseURL = function(url, input, stateOverride, base) {
+    var state = stateOverride || $2041ac0ea5d0446d77b43707bbec7e9d$var$SCHEME_START;
+    var pointer = 0;
+    var buffer = '';
+    var seenAt = false;
+    var seenBracket = false;
+    var seenPasswordToken = false;
+    var codePoints, char, bufferCodePoints, failure;
+    if (!stateOverride) {
+        url.scheme = '';
+        url.username = '';
+        url.password = '';
+        url.host = null;
+        url.port = null;
+        url.path = [];
+        url.query = null;
+        url.fragment = null;
+        url.cannotBeABaseURL = false;
+        input = input.replace($2041ac0ea5d0446d77b43707bbec7e9d$var$LEADING_AND_TRAILING_C0_CONTROL_OR_SPACE, '');
+    }
+    input = input.replace($2041ac0ea5d0446d77b43707bbec7e9d$var$TAB_AND_NEW_LINE, '');
+    codePoints = $2041ac0ea5d0446d77b43707bbec7e9d$import$a27e793652f6d51f(input);
+    while(pointer <= codePoints.length){
+        char = codePoints[pointer];
+        switch(state){
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$SCHEME_START:
+                if (char && $2041ac0ea5d0446d77b43707bbec7e9d$var$ALPHA.test(char)) {
+                    buffer += char.toLowerCase();
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$SCHEME;
+                } else if (!stateOverride) {
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$NO_SCHEME;
+                    continue;
+                } else return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_SCHEME;
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$SCHEME:
+                if (char && ($2041ac0ea5d0446d77b43707bbec7e9d$var$ALPHANUMERIC.test(char) || char == '+' || char == '-' || char == '.')) buffer += char.toLowerCase();
+                else if (char == ':') {
+                    if (stateOverride && ($2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url) != $2041ac0ea5d0446d77b43707bbec7e9d$import$7e2f6fc726b1debe($2041ac0ea5d0446d77b43707bbec7e9d$var$specialSchemes, buffer) || buffer == 'file' && ($2041ac0ea5d0446d77b43707bbec7e9d$var$includesCredentials(url) || url.port !== null) || url.scheme == 'file' && !url.host)) return;
+                    url.scheme = buffer;
+                    if (stateOverride) {
+                        if ($2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url) && $2041ac0ea5d0446d77b43707bbec7e9d$var$specialSchemes[url.scheme] == url.port) url.port = null;
+                        return;
+                    }
+                    buffer = '';
+                    if (url.scheme == 'file') state = $2041ac0ea5d0446d77b43707bbec7e9d$var$FILE;
+                    else if ($2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url) && base && base.scheme == url.scheme) state = $2041ac0ea5d0446d77b43707bbec7e9d$var$SPECIAL_RELATIVE_OR_AUTHORITY;
+                    else if ($2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url)) state = $2041ac0ea5d0446d77b43707bbec7e9d$var$SPECIAL_AUTHORITY_SLASHES;
+                    else if (codePoints[pointer + 1] == '/') {
+                        state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH_OR_AUTHORITY;
+                        pointer++;
+                    } else {
+                        url.cannotBeABaseURL = true;
+                        url.path.push('');
+                        state = $2041ac0ea5d0446d77b43707bbec7e9d$var$CANNOT_BE_A_BASE_URL_PATH;
+                    }
+                } else if (!stateOverride) {
+                    buffer = '';
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$NO_SCHEME;
+                    pointer = 0;
+                    continue;
+                } else return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_SCHEME;
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$NO_SCHEME:
+                if (!base || base.cannotBeABaseURL && char != '#') return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_SCHEME;
+                if (base.cannotBeABaseURL && char == '#') {
+                    url.scheme = base.scheme;
+                    url.path = base.path.slice();
+                    url.query = base.query;
+                    url.fragment = '';
+                    url.cannotBeABaseURL = true;
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$FRAGMENT;
+                    break;
+                }
+                state = base.scheme == 'file' ? $2041ac0ea5d0446d77b43707bbec7e9d$var$FILE : $2041ac0ea5d0446d77b43707bbec7e9d$var$RELATIVE;
+                continue;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$SPECIAL_RELATIVE_OR_AUTHORITY:
+                if (char == '/' && codePoints[pointer + 1] == '/') {
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$SPECIAL_AUTHORITY_IGNORE_SLASHES;
+                    pointer++;
+                } else {
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$RELATIVE;
+                    continue;
+                }
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH_OR_AUTHORITY:
+                if (char == '/') {
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$AUTHORITY;
+                    break;
+                } else {
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH;
+                    continue;
+                }
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$RELATIVE:
+                url.scheme = base.scheme;
+                if (char == $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF) {
+                    url.username = base.username;
+                    url.password = base.password;
+                    url.host = base.host;
+                    url.port = base.port;
+                    url.path = base.path.slice();
+                    url.query = base.query;
+                } else if (char == '/' || char == '\\' && $2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url)) state = $2041ac0ea5d0446d77b43707bbec7e9d$var$RELATIVE_SLASH;
+                else if (char == '?') {
+                    url.username = base.username;
+                    url.password = base.password;
+                    url.host = base.host;
+                    url.port = base.port;
+                    url.path = base.path.slice();
+                    url.query = '';
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$QUERY;
+                } else if (char == '#') {
+                    url.username = base.username;
+                    url.password = base.password;
+                    url.host = base.host;
+                    url.port = base.port;
+                    url.path = base.path.slice();
+                    url.query = base.query;
+                    url.fragment = '';
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$FRAGMENT;
+                } else {
+                    url.username = base.username;
+                    url.password = base.password;
+                    url.host = base.host;
+                    url.port = base.port;
+                    url.path = base.path.slice();
+                    url.path.pop();
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH;
+                    continue;
+                }
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$RELATIVE_SLASH:
+                if ($2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url) && (char == '/' || char == '\\')) state = $2041ac0ea5d0446d77b43707bbec7e9d$var$SPECIAL_AUTHORITY_IGNORE_SLASHES;
+                else if (char == '/') state = $2041ac0ea5d0446d77b43707bbec7e9d$var$AUTHORITY;
+                else {
+                    url.username = base.username;
+                    url.password = base.password;
+                    url.host = base.host;
+                    url.port = base.port;
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH;
+                    continue;
+                }
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$SPECIAL_AUTHORITY_SLASHES:
+                state = $2041ac0ea5d0446d77b43707bbec7e9d$var$SPECIAL_AUTHORITY_IGNORE_SLASHES;
+                if (char != '/' || buffer.charAt(pointer + 1) != '/') continue;
+                pointer++;
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$SPECIAL_AUTHORITY_IGNORE_SLASHES:
+                if (char != '/' && char != '\\') {
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$AUTHORITY;
+                    continue;
+                }
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$AUTHORITY:
+                if (char == '@') {
+                    if (seenAt) buffer = '%40' + buffer;
+                    seenAt = true;
+                    bufferCodePoints = $2041ac0ea5d0446d77b43707bbec7e9d$import$a27e793652f6d51f(buffer);
+                    for(var i = 0; i < bufferCodePoints.length; i++){
+                        var codePoint = bufferCodePoints[i];
+                        if (codePoint == ':' && !seenPasswordToken) {
+                            seenPasswordToken = true;
+                            continue;
+                        }
+                        var encodedCodePoints = $2041ac0ea5d0446d77b43707bbec7e9d$var$percentEncode(codePoint, $2041ac0ea5d0446d77b43707bbec7e9d$var$userinfoPercentEncodeSet);
+                        if (seenPasswordToken) url.password += encodedCodePoints;
+                        else url.username += encodedCodePoints;
+                    }
+                    buffer = '';
+                } else if (char == $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF || char == '/' || char == '?' || char == '#' || char == '\\' && $2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url)) {
+                    if (seenAt && buffer == '') return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_AUTHORITY;
+                    pointer -= $2041ac0ea5d0446d77b43707bbec7e9d$import$a27e793652f6d51f(buffer).length + 1;
+                    buffer = '';
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$HOST;
+                } else buffer += char;
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$HOST:
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$HOSTNAME:
+                if (stateOverride && url.scheme == 'file') {
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$FILE_HOST;
+                    continue;
+                } else if (char == ':' && !seenBracket) {
+                    if (buffer == '') return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_HOST;
+                    failure = $2041ac0ea5d0446d77b43707bbec7e9d$var$parseHost(url, buffer);
+                    if (failure) return failure;
+                    buffer = '';
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PORT;
+                    if (stateOverride == $2041ac0ea5d0446d77b43707bbec7e9d$var$HOSTNAME) return;
+                } else if (char == $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF || char == '/' || char == '?' || char == '#' || char == '\\' && $2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url)) {
+                    if ($2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url) && buffer == '') return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_HOST;
+                    if (stateOverride && buffer == '' && ($2041ac0ea5d0446d77b43707bbec7e9d$var$includesCredentials(url) || url.port !== null)) return;
+                    failure = $2041ac0ea5d0446d77b43707bbec7e9d$var$parseHost(url, buffer);
+                    if (failure) return failure;
+                    buffer = '';
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH_START;
+                    if (stateOverride) return;
+                    continue;
+                } else {
+                    if (char == '[') seenBracket = true;
+                    else if (char == ']') seenBracket = false;
+                    buffer += char;
+                }
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$PORT:
+                if ($2041ac0ea5d0446d77b43707bbec7e9d$var$DIGIT.test(char)) buffer += char;
+                else if (char == $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF || char == '/' || char == '?' || char == '#' || char == '\\' && $2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url) || stateOverride) {
+                    if (buffer != '') {
+                        var port = parseInt(buffer, 10);
+                        if (port > 65535) return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_PORT;
+                        url.port = $2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url) && port === $2041ac0ea5d0446d77b43707bbec7e9d$var$specialSchemes[url.scheme] ? null : port;
+                        buffer = '';
+                    }
+                    if (stateOverride) return;
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH_START;
+                    continue;
+                } else return $2041ac0ea5d0446d77b43707bbec7e9d$var$INVALID_PORT;
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$FILE:
+                url.scheme = 'file';
+                if (char == '/' || char == '\\') state = $2041ac0ea5d0446d77b43707bbec7e9d$var$FILE_SLASH;
+                else if (base && base.scheme == 'file') {
+                    if (char == $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF) {
+                        url.host = base.host;
+                        url.path = base.path.slice();
+                        url.query = base.query;
+                    } else if (char == '?') {
+                        url.host = base.host;
+                        url.path = base.path.slice();
+                        url.query = '';
+                        state = $2041ac0ea5d0446d77b43707bbec7e9d$var$QUERY;
+                    } else if (char == '#') {
+                        url.host = base.host;
+                        url.path = base.path.slice();
+                        url.query = base.query;
+                        url.fragment = '';
+                        state = $2041ac0ea5d0446d77b43707bbec7e9d$var$FRAGMENT;
+                    } else {
+                        if (!$2041ac0ea5d0446d77b43707bbec7e9d$var$startsWithWindowsDriveLetter(codePoints.slice(pointer).join(''))) {
+                            url.host = base.host;
+                            url.path = base.path.slice();
+                            $2041ac0ea5d0446d77b43707bbec7e9d$var$shortenURLsPath(url);
+                        }
+                        state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH;
+                        continue;
+                    }
+                } else {
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH;
+                    continue;
+                }
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$FILE_SLASH:
+                if (char == '/' || char == '\\') {
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$FILE_HOST;
+                    break;
+                }
+                if (base && base.scheme == 'file' && !$2041ac0ea5d0446d77b43707bbec7e9d$var$startsWithWindowsDriveLetter(codePoints.slice(pointer).join(''))) {
+                    if ($2041ac0ea5d0446d77b43707bbec7e9d$var$isWindowsDriveLetter(base.path[0], true)) url.path.push(base.path[0]);
+                    else url.host = base.host;
+                }
+                state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH;
+                continue;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$FILE_HOST:
+                if (char == $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF || char == '/' || char == '\\' || char == '?' || char == '#') {
+                    if (!stateOverride && $2041ac0ea5d0446d77b43707bbec7e9d$var$isWindowsDriveLetter(buffer)) state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH;
+                    else if (buffer == '') {
+                        url.host = '';
+                        if (stateOverride) return;
+                        state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH_START;
+                    } else {
+                        failure = $2041ac0ea5d0446d77b43707bbec7e9d$var$parseHost(url, buffer);
+                        if (failure) return failure;
+                        if (url.host == 'localhost') url.host = '';
+                        if (stateOverride) return;
+                        buffer = '';
+                        state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH_START;
+                    }
+                    continue;
+                } else buffer += char;
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH_START:
+                if ($2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url)) {
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH;
+                    if (char != '/' && char != '\\') continue;
+                } else if (!stateOverride && char == '?') {
+                    url.query = '';
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$QUERY;
+                } else if (!stateOverride && char == '#') {
+                    url.fragment = '';
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$FRAGMENT;
+                } else if (char != $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF) {
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH;
+                    if (char != '/') continue;
+                }
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH:
+                if (char == $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF || char == '/' || char == '\\' && $2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url) || !stateOverride && (char == '?' || char == '#')) {
+                    if ($2041ac0ea5d0446d77b43707bbec7e9d$var$isDoubleDot(buffer)) {
+                        $2041ac0ea5d0446d77b43707bbec7e9d$var$shortenURLsPath(url);
+                        if (char != '/' && !(char == '\\' && $2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url))) url.path.push('');
+                    } else if ($2041ac0ea5d0446d77b43707bbec7e9d$var$isSingleDot(buffer)) {
+                        if (char != '/' && !(char == '\\' && $2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url))) url.path.push('');
+                    } else {
+                        if (url.scheme == 'file' && !url.path.length && $2041ac0ea5d0446d77b43707bbec7e9d$var$isWindowsDriveLetter(buffer)) {
+                            if (url.host) url.host = '';
+                            buffer = buffer.charAt(0) + ':'; // normalize windows drive letter
+                        }
+                        url.path.push(buffer);
+                    }
+                    buffer = '';
+                    if (url.scheme == 'file' && (char == $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF || char == '?' || char == '#')) while(url.path.length > 1 && url.path[0] === '')url.path.shift();
+                    if (char == '?') {
+                        url.query = '';
+                        state = $2041ac0ea5d0446d77b43707bbec7e9d$var$QUERY;
+                    } else if (char == '#') {
+                        url.fragment = '';
+                        state = $2041ac0ea5d0446d77b43707bbec7e9d$var$FRAGMENT;
+                    }
+                } else buffer += $2041ac0ea5d0446d77b43707bbec7e9d$var$percentEncode(char, $2041ac0ea5d0446d77b43707bbec7e9d$var$pathPercentEncodeSet);
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$CANNOT_BE_A_BASE_URL_PATH:
+                if (char == '?') {
+                    url.query = '';
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$QUERY;
+                } else if (char == '#') {
+                    url.fragment = '';
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$FRAGMENT;
+                } else if (char != $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF) url.path[0] += $2041ac0ea5d0446d77b43707bbec7e9d$var$percentEncode(char, $2041ac0ea5d0446d77b43707bbec7e9d$var$C0ControlPercentEncodeSet);
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$QUERY:
+                if (!stateOverride && char == '#') {
+                    url.fragment = '';
+                    state = $2041ac0ea5d0446d77b43707bbec7e9d$var$FRAGMENT;
+                } else if (char != $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF) {
+                    if (char == "'" && $2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url)) url.query += '%27';
+                    else if (char == '#') url.query += '%23';
+                    else url.query += $2041ac0ea5d0446d77b43707bbec7e9d$var$percentEncode(char, $2041ac0ea5d0446d77b43707bbec7e9d$var$C0ControlPercentEncodeSet);
+                }
+                break;
+            case $2041ac0ea5d0446d77b43707bbec7e9d$var$FRAGMENT:
+                if (char != $2041ac0ea5d0446d77b43707bbec7e9d$var$EOF) url.fragment += $2041ac0ea5d0446d77b43707bbec7e9d$var$percentEncode(char, $2041ac0ea5d0446d77b43707bbec7e9d$var$fragmentPercentEncodeSet);
+                break;
+        }
+        pointer++;
+    }
+};
+// `URL` constructor
+// https://url.spec.whatwg.org/#url-class
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$URLConstructor = function URL1(url/* , base */ ) {
+    var that = $2041ac0ea5d0446d77b43707bbec7e9d$import$65a2120eaf0c2a0a(this, $2041ac0ea5d0446d77b43707bbec7e9d$var$URLConstructor, 'URL');
+    var base = arguments.length > 1 ? arguments[1] : undefined;
+    var urlString = String(url);
+    var state = $2041ac0ea5d0446d77b43707bbec7e9d$var$setInternalState(that, {
+        type: 'URL'
+    });
+    var baseState, failure;
+    if (base !== undefined) {
+        if (base instanceof $2041ac0ea5d0446d77b43707bbec7e9d$var$URLConstructor) baseState = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(base);
+        else {
+            failure = $2041ac0ea5d0446d77b43707bbec7e9d$var$parseURL(baseState = {
+            }, String(base));
+            if (failure) throw TypeError(failure);
+        }
+    }
+    failure = $2041ac0ea5d0446d77b43707bbec7e9d$var$parseURL(state, urlString, null, baseState);
+    if (failure) throw TypeError(failure);
+    var searchParams = state.searchParams = new $2041ac0ea5d0446d77b43707bbec7e9d$var$URLSearchParams();
+    var searchParamsState = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalSearchParamsState(searchParams);
+    searchParamsState.updateSearchParams(state.query);
+    searchParamsState.updateURL = function() {
+        state.query = String(searchParams) || null;
+    };
+    if (!$2041ac0ea5d0446d77b43707bbec7e9d$import$9e95520c426f46b4) {
+        that.href = $2041ac0ea5d0446d77b43707bbec7e9d$var$serializeURL.call(that);
+        that.origin = $2041ac0ea5d0446d77b43707bbec7e9d$var$getOrigin.call(that);
+        that.protocol = $2041ac0ea5d0446d77b43707bbec7e9d$var$getProtocol.call(that);
+        that.username = $2041ac0ea5d0446d77b43707bbec7e9d$var$getUsername.call(that);
+        that.password = $2041ac0ea5d0446d77b43707bbec7e9d$var$getPassword.call(that);
+        that.host = $2041ac0ea5d0446d77b43707bbec7e9d$var$getHost.call(that);
+        that.hostname = $2041ac0ea5d0446d77b43707bbec7e9d$var$getHostname.call(that);
+        that.port = $2041ac0ea5d0446d77b43707bbec7e9d$var$getPort.call(that);
+        that.pathname = $2041ac0ea5d0446d77b43707bbec7e9d$var$getPathname.call(that);
+        that.search = $2041ac0ea5d0446d77b43707bbec7e9d$var$getSearch.call(that);
+        that.searchParams = $2041ac0ea5d0446d77b43707bbec7e9d$var$getSearchParams.call(that);
+        that.hash = $2041ac0ea5d0446d77b43707bbec7e9d$var$getHash.call(that);
+    }
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$URLPrototype = $2041ac0ea5d0446d77b43707bbec7e9d$var$URLConstructor.prototype;
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$serializeURL = function() {
+    var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+    var scheme = url.scheme;
+    var username = url.username;
+    var password = url.password;
+    var host = url.host;
+    var port = url.port;
+    var path = url.path;
+    var query = url.query;
+    var fragment = url.fragment;
+    var output = scheme + ':';
+    if (host !== null) {
+        output += '//';
+        if ($2041ac0ea5d0446d77b43707bbec7e9d$var$includesCredentials(url)) output += username + (password ? ':' + password : '') + '@';
+        output += $2041ac0ea5d0446d77b43707bbec7e9d$var$serializeHost(host);
+        if (port !== null) output += ':' + port;
+    } else if (scheme == 'file') output += '//';
+    output += url.cannotBeABaseURL ? path[0] : path.length ? '/' + path.join('/') : '';
+    if (query !== null) output += '?' + query;
+    if (fragment !== null) output += '#' + fragment;
+    return output;
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getOrigin = function() {
+    var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+    var scheme = url.scheme;
+    var port = url.port;
+    if (scheme == 'blob') try {
+        return new $2041ac0ea5d0446d77b43707bbec7e9d$var$URLConstructor(scheme.path[0]).origin;
+    } catch (error) {
+        return 'null';
+    }
+    if (scheme == 'file' || !$2041ac0ea5d0446d77b43707bbec7e9d$var$isSpecial(url)) return 'null';
+    return scheme + '://' + $2041ac0ea5d0446d77b43707bbec7e9d$var$serializeHost(url.host) + (port !== null ? ':' + port : '');
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getProtocol = function() {
+    return $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this).scheme + ':';
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getUsername = function() {
+    return $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this).username;
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getPassword = function() {
+    return $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this).password;
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getHost = function() {
+    var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+    var host = url.host;
+    var port = url.port;
+    return host === null ? '' : port === null ? $2041ac0ea5d0446d77b43707bbec7e9d$var$serializeHost(host) : $2041ac0ea5d0446d77b43707bbec7e9d$var$serializeHost(host) + ':' + port;
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getHostname = function() {
+    var host = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this).host;
+    return host === null ? '' : $2041ac0ea5d0446d77b43707bbec7e9d$var$serializeHost(host);
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getPort = function() {
+    var port = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this).port;
+    return port === null ? '' : String(port);
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getPathname = function() {
+    var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+    var path = url.path;
+    return url.cannotBeABaseURL ? path[0] : path.length ? '/' + path.join('/') : '';
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getSearch = function() {
+    var query = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this).query;
+    return query ? '?' + query : '';
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getSearchParams = function() {
+    return $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this).searchParams;
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$getHash = function() {
+    var fragment = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this).fragment;
+    return fragment ? '#' + fragment : '';
+};
+var $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor = function(getter, setter) {
+    return {
+        get: getter,
+        set: setter,
+        configurable: true,
+        enumerable: true
+    };
+};
+if ($2041ac0ea5d0446d77b43707bbec7e9d$import$9e95520c426f46b4) $2041ac0ea5d0446d77b43707bbec7e9d$import$e2e41dc05e8a9d6d($2041ac0ea5d0446d77b43707bbec7e9d$var$URLPrototype, {
+    // `URL.prototype.href` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-href
+    href: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$serializeURL, function(href) {
+        var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+        var urlString = String(href);
+        var failure = $2041ac0ea5d0446d77b43707bbec7e9d$var$parseURL(url, urlString);
+        if (failure) throw TypeError(failure);
+        $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalSearchParamsState(url.searchParams).updateSearchParams(url.query);
+    }),
+    // `URL.prototype.origin` getter
+    // https://url.spec.whatwg.org/#dom-url-origin
+    origin: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$getOrigin),
+    // `URL.prototype.protocol` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-protocol
+    protocol: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$getProtocol, function(protocol) {
+        var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+        $2041ac0ea5d0446d77b43707bbec7e9d$var$parseURL(url, String(protocol) + ':', $2041ac0ea5d0446d77b43707bbec7e9d$var$SCHEME_START);
+    }),
+    // `URL.prototype.username` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-username
+    username: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$getUsername, function(username) {
+        var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+        var codePoints = $2041ac0ea5d0446d77b43707bbec7e9d$import$a27e793652f6d51f(String(username));
+        if ($2041ac0ea5d0446d77b43707bbec7e9d$var$cannotHaveUsernamePasswordPort(url)) return;
+        url.username = '';
+        for(var i = 0; i < codePoints.length; i++)url.username += $2041ac0ea5d0446d77b43707bbec7e9d$var$percentEncode(codePoints[i], $2041ac0ea5d0446d77b43707bbec7e9d$var$userinfoPercentEncodeSet);
+    }),
+    // `URL.prototype.password` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-password
+    password: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$getPassword, function(password) {
+        var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+        var codePoints = $2041ac0ea5d0446d77b43707bbec7e9d$import$a27e793652f6d51f(String(password));
+        if ($2041ac0ea5d0446d77b43707bbec7e9d$var$cannotHaveUsernamePasswordPort(url)) return;
+        url.password = '';
+        for(var i = 0; i < codePoints.length; i++)url.password += $2041ac0ea5d0446d77b43707bbec7e9d$var$percentEncode(codePoints[i], $2041ac0ea5d0446d77b43707bbec7e9d$var$userinfoPercentEncodeSet);
+    }),
+    // `URL.prototype.host` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-host
+    host: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$getHost, function(host) {
+        var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+        if (url.cannotBeABaseURL) return;
+        $2041ac0ea5d0446d77b43707bbec7e9d$var$parseURL(url, String(host), $2041ac0ea5d0446d77b43707bbec7e9d$var$HOST);
+    }),
+    // `URL.prototype.hostname` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-hostname
+    hostname: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$getHostname, function(hostname) {
+        var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+        if (url.cannotBeABaseURL) return;
+        $2041ac0ea5d0446d77b43707bbec7e9d$var$parseURL(url, String(hostname), $2041ac0ea5d0446d77b43707bbec7e9d$var$HOSTNAME);
+    }),
+    // `URL.prototype.port` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-port
+    port: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$getPort, function(port) {
+        var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+        if ($2041ac0ea5d0446d77b43707bbec7e9d$var$cannotHaveUsernamePasswordPort(url)) return;
+        port = String(port);
+        if (port == '') url.port = null;
+        else $2041ac0ea5d0446d77b43707bbec7e9d$var$parseURL(url, port, $2041ac0ea5d0446d77b43707bbec7e9d$var$PORT);
+    }),
+    // `URL.prototype.pathname` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-pathname
+    pathname: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$getPathname, function(pathname) {
+        var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+        if (url.cannotBeABaseURL) return;
+        url.path = [];
+        $2041ac0ea5d0446d77b43707bbec7e9d$var$parseURL(url, pathname + '', $2041ac0ea5d0446d77b43707bbec7e9d$var$PATH_START);
+    }),
+    // `URL.prototype.search` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-search
+    search: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$getSearch, function(search) {
+        var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+        search = String(search);
+        if (search == '') url.query = null;
+        else {
+            if ('?' == search.charAt(0)) search = search.slice(1);
+            url.query = '';
+            $2041ac0ea5d0446d77b43707bbec7e9d$var$parseURL(url, search, $2041ac0ea5d0446d77b43707bbec7e9d$var$QUERY);
+        }
+        $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalSearchParamsState(url.searchParams).updateSearchParams(url.query);
+    }),
+    // `URL.prototype.searchParams` getter
+    // https://url.spec.whatwg.org/#dom-url-searchparams
+    searchParams: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$getSearchParams),
+    // `URL.prototype.hash` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-hash
+    hash: $2041ac0ea5d0446d77b43707bbec7e9d$var$accessorDescriptor($2041ac0ea5d0446d77b43707bbec7e9d$var$getHash, function(hash) {
+        var url = $2041ac0ea5d0446d77b43707bbec7e9d$var$getInternalURLState(this);
+        hash = String(hash);
+        if (hash == '') {
+            url.fragment = null;
+            return;
+        }
+        if ('#' == hash.charAt(0)) hash = hash.slice(1);
+        url.fragment = '';
+        $2041ac0ea5d0446d77b43707bbec7e9d$var$parseURL(url, hash, $2041ac0ea5d0446d77b43707bbec7e9d$var$FRAGMENT);
+    })
+});
+// `URL.prototype.toJSON` method
+// https://url.spec.whatwg.org/#dom-url-tojson
+$2041ac0ea5d0446d77b43707bbec7e9d$import$715a1a2c44d923e3($2041ac0ea5d0446d77b43707bbec7e9d$var$URLPrototype, 'toJSON', function toJSON() {
+    return $2041ac0ea5d0446d77b43707bbec7e9d$var$serializeURL.call(this);
+}, {
+    enumerable: true
+});
+// `URL.prototype.toString` method
+// https://url.spec.whatwg.org/#URL-stringification-behavior
+$2041ac0ea5d0446d77b43707bbec7e9d$import$715a1a2c44d923e3($2041ac0ea5d0446d77b43707bbec7e9d$var$URLPrototype, 'toString', function toString() {
+    return $2041ac0ea5d0446d77b43707bbec7e9d$var$serializeURL.call(this);
+}, {
+    enumerable: true
+});
+if ($2041ac0ea5d0446d77b43707bbec7e9d$var$NativeURL) {
+    var $2041ac0ea5d0446d77b43707bbec7e9d$var$nativeCreateObjectURL = $2041ac0ea5d0446d77b43707bbec7e9d$var$NativeURL.createObjectURL;
+    var $2041ac0ea5d0446d77b43707bbec7e9d$var$nativeRevokeObjectURL = $2041ac0ea5d0446d77b43707bbec7e9d$var$NativeURL.revokeObjectURL;
+    // `URL.createObjectURL` method
+    // https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
+    // eslint-disable-next-line no-unused-vars -- required for `.length`
+    if ($2041ac0ea5d0446d77b43707bbec7e9d$var$nativeCreateObjectURL) $2041ac0ea5d0446d77b43707bbec7e9d$import$715a1a2c44d923e3($2041ac0ea5d0446d77b43707bbec7e9d$var$URLConstructor, 'createObjectURL', function createObjectURL(blob) {
+        return $2041ac0ea5d0446d77b43707bbec7e9d$var$nativeCreateObjectURL.apply($2041ac0ea5d0446d77b43707bbec7e9d$var$NativeURL, arguments);
+    });
+    // `URL.revokeObjectURL` method
+    // https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL
+    // eslint-disable-next-line no-unused-vars -- required for `.length`
+    if ($2041ac0ea5d0446d77b43707bbec7e9d$var$nativeRevokeObjectURL) $2041ac0ea5d0446d77b43707bbec7e9d$import$715a1a2c44d923e3($2041ac0ea5d0446d77b43707bbec7e9d$var$URLConstructor, 'revokeObjectURL', function revokeObjectURL(url) {
+        return $2041ac0ea5d0446d77b43707bbec7e9d$var$nativeRevokeObjectURL.apply($2041ac0ea5d0446d77b43707bbec7e9d$var$NativeURL, arguments);
+    });
+}
+$2041ac0ea5d0446d77b43707bbec7e9d$import$c84072deb0264877($2041ac0ea5d0446d77b43707bbec7e9d$var$URLConstructor, 'URL');
+$2041ac0ea5d0446d77b43707bbec7e9d$import$1bb3f1a3ac631152({
+    global: true,
+    forced: !$2041ac0ea5d0446d77b43707bbec7e9d$import$2069d99f676e2d40,
+    sham: !$2041ac0ea5d0446d77b43707bbec7e9d$import$9e95520c426f46b4
+}, {
+    URL: $2041ac0ea5d0446d77b43707bbec7e9d$var$URLConstructor
+});

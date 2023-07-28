@@ -1,0 +1,6 @@
+import   "4e8bef6c3b0b741c0503d855fe49fc9f:../internals/global";
+import   "4e8bef6c3b0b741c0503d855fe49fc9f:../internals/set-global";
+var $4e8bef6c3b0b741c0503d855fe49fc9f$var$SHARED = '__core-js_shared__';
+var $4e8bef6c3b0b741c0503d855fe49fc9f$var$store = $4e8bef6c3b0b741c0503d855fe49fc9f$import$da678c04728da253[$4e8bef6c3b0b741c0503d855fe49fc9f$var$SHARED] || $4e8bef6c3b0b741c0503d855fe49fc9f$import$47dc390bace821d3($4e8bef6c3b0b741c0503d855fe49fc9f$var$SHARED, {
+});
+$4e8bef6c3b0b741c0503d855fe49fc9f$exports = $4e8bef6c3b0b741c0503d855fe49fc9f$var$store;

@@ -1,0 +1,64 @@
+import   "ae7e3ff0bc056628abb1caf7e74ceac5:../internals/native-weak-map";
+import   "ae7e3ff0bc056628abb1caf7e74ceac5:../internals/global";
+import   "ae7e3ff0bc056628abb1caf7e74ceac5:../internals/is-object";
+import   "ae7e3ff0bc056628abb1caf7e74ceac5:../internals/create-non-enumerable-property";
+import   "ae7e3ff0bc056628abb1caf7e74ceac5:../internals/has";
+import   "ae7e3ff0bc056628abb1caf7e74ceac5:../internals/shared-store";
+import   "ae7e3ff0bc056628abb1caf7e74ceac5:../internals/shared-key";
+import   "ae7e3ff0bc056628abb1caf7e74ceac5:../internals/hidden-keys";
+var $ae7e3ff0bc056628abb1caf7e74ceac5$var$OBJECT_ALREADY_INITIALIZED = 'Object already initialized';
+var $ae7e3ff0bc056628abb1caf7e74ceac5$var$WeakMap = $ae7e3ff0bc056628abb1caf7e74ceac5$import$da678c04728da253$b46c52e11593a594;
+var $ae7e3ff0bc056628abb1caf7e74ceac5$var$set, $ae7e3ff0bc056628abb1caf7e74ceac5$var$get, $ae7e3ff0bc056628abb1caf7e74ceac5$var$has;
+var $ae7e3ff0bc056628abb1caf7e74ceac5$var$enforce = function(it) {
+    return $ae7e3ff0bc056628abb1caf7e74ceac5$var$has(it) ? $ae7e3ff0bc056628abb1caf7e74ceac5$var$get(it) : $ae7e3ff0bc056628abb1caf7e74ceac5$var$set(it, {
+    });
+};
+var $ae7e3ff0bc056628abb1caf7e74ceac5$var$getterFor = function(TYPE) {
+    return function(it) {
+        var state;
+        if (!$ae7e3ff0bc056628abb1caf7e74ceac5$import$9294ccec169e68b9(it) || (state = $ae7e3ff0bc056628abb1caf7e74ceac5$var$get(it)).type !== TYPE) throw TypeError('Incompatible receiver, ' + TYPE + ' required');
+        return state;
+    };
+};
+if ($ae7e3ff0bc056628abb1caf7e74ceac5$import$146e560c20f365e6 || $ae7e3ff0bc056628abb1caf7e74ceac5$import$87826f782e8bcec7$c837a8b98c265ae3) {
+    var $ae7e3ff0bc056628abb1caf7e74ceac5$var$store = $ae7e3ff0bc056628abb1caf7e74ceac5$import$87826f782e8bcec7$c837a8b98c265ae3 || ($ae7e3ff0bc056628abb1caf7e74ceac5$import$87826f782e8bcec7$c837a8b98c265ae3 = new $ae7e3ff0bc056628abb1caf7e74ceac5$var$WeakMap());
+    var $ae7e3ff0bc056628abb1caf7e74ceac5$var$wmget = $ae7e3ff0bc056628abb1caf7e74ceac5$var$store.get;
+    var $ae7e3ff0bc056628abb1caf7e74ceac5$var$wmhas = $ae7e3ff0bc056628abb1caf7e74ceac5$var$store.has;
+    var $ae7e3ff0bc056628abb1caf7e74ceac5$var$wmset = $ae7e3ff0bc056628abb1caf7e74ceac5$var$store.set;
+    $ae7e3ff0bc056628abb1caf7e74ceac5$var$set = function(it, metadata) {
+        if ($ae7e3ff0bc056628abb1caf7e74ceac5$var$wmhas.call($ae7e3ff0bc056628abb1caf7e74ceac5$var$store, it)) throw new TypeError($ae7e3ff0bc056628abb1caf7e74ceac5$var$OBJECT_ALREADY_INITIALIZED);
+        metadata.facade = it;
+        $ae7e3ff0bc056628abb1caf7e74ceac5$var$wmset.call($ae7e3ff0bc056628abb1caf7e74ceac5$var$store, it, metadata);
+        return metadata;
+    };
+    $ae7e3ff0bc056628abb1caf7e74ceac5$var$get = function(it) {
+        return $ae7e3ff0bc056628abb1caf7e74ceac5$var$wmget.call($ae7e3ff0bc056628abb1caf7e74ceac5$var$store, it) || {
+        };
+    };
+    $ae7e3ff0bc056628abb1caf7e74ceac5$var$has = function(it) {
+        return $ae7e3ff0bc056628abb1caf7e74ceac5$var$wmhas.call($ae7e3ff0bc056628abb1caf7e74ceac5$var$store, it);
+    };
+} else {
+    var $ae7e3ff0bc056628abb1caf7e74ceac5$var$STATE = $ae7e3ff0bc056628abb1caf7e74ceac5$import$2d2d2b941f984340('state');
+    $ae7e3ff0bc056628abb1caf7e74ceac5$import$d45197a06d41f191[$ae7e3ff0bc056628abb1caf7e74ceac5$var$STATE] = true;
+    $ae7e3ff0bc056628abb1caf7e74ceac5$var$set = function(it, metadata) {
+        if ($ae7e3ff0bc056628abb1caf7e74ceac5$import$7e2f6fc726b1debe(it, $ae7e3ff0bc056628abb1caf7e74ceac5$var$STATE)) throw new TypeError($ae7e3ff0bc056628abb1caf7e74ceac5$var$OBJECT_ALREADY_INITIALIZED);
+        metadata.facade = it;
+        $ae7e3ff0bc056628abb1caf7e74ceac5$import$ea4d2ea16a516be3(it, $ae7e3ff0bc056628abb1caf7e74ceac5$var$STATE, metadata);
+        return metadata;
+    };
+    $ae7e3ff0bc056628abb1caf7e74ceac5$var$get = function(it) {
+        return $ae7e3ff0bc056628abb1caf7e74ceac5$import$7e2f6fc726b1debe(it, $ae7e3ff0bc056628abb1caf7e74ceac5$var$STATE) ? it[$ae7e3ff0bc056628abb1caf7e74ceac5$var$STATE] : {
+        };
+    };
+    $ae7e3ff0bc056628abb1caf7e74ceac5$var$has = function(it) {
+        return $ae7e3ff0bc056628abb1caf7e74ceac5$import$7e2f6fc726b1debe(it, $ae7e3ff0bc056628abb1caf7e74ceac5$var$STATE);
+    };
+}
+$ae7e3ff0bc056628abb1caf7e74ceac5$exports = {
+    set: $ae7e3ff0bc056628abb1caf7e74ceac5$var$set,
+    get: $ae7e3ff0bc056628abb1caf7e74ceac5$var$get,
+    has: $ae7e3ff0bc056628abb1caf7e74ceac5$var$has,
+    enforce: $ae7e3ff0bc056628abb1caf7e74ceac5$var$enforce,
+    getterFor: $ae7e3ff0bc056628abb1caf7e74ceac5$var$getterFor
+};

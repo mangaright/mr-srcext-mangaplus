@@ -1,0 +1,13 @@
+import   "1d43fbe9079d96e1bb258387e67fd6a4:../internals/has";
+import   "1d43fbe9079d96e1bb258387e67fd6a4:../internals/own-keys";
+import   "1d43fbe9079d96e1bb258387e67fd6a4:../internals/object-get-own-property-descriptor";
+import   "1d43fbe9079d96e1bb258387e67fd6a4:../internals/object-define-property";
+$1d43fbe9079d96e1bb258387e67fd6a4$exports = function(target, source) {
+    var keys = $1d43fbe9079d96e1bb258387e67fd6a4$import$43813691b184ffcd(source);
+    var defineProperty = $1d43fbe9079d96e1bb258387e67fd6a4$import$4276e2046cfaee3b$ffb27d6bd8d1eb33;
+    var getOwnPropertyDescriptor = $1d43fbe9079d96e1bb258387e67fd6a4$import$671bedbe12b63e7d$ffb27d6bd8d1eb33;
+    for(var i = 0; i < keys.length; i++){
+        var key = keys[i];
+        if (!$1d43fbe9079d96e1bb258387e67fd6a4$import$7e2f6fc726b1debe(target, key)) defineProperty(target, key, getOwnPropertyDescriptor(source, key));
+    }
+};

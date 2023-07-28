@@ -1,0 +1,336 @@
+'use strict';
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../modules/es.array.iterator";
+// TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
+$a16f63bd039b4ef62c6bed9a8239f5c3$import$90b07716263c915a;
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/export";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/get-built-in";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/native-url";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/redefine";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/redefine-all";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/set-to-string-tag";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/create-iterator-constructor";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/internal-state";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/an-instance";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/has";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/function-bind-context";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/classof";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/an-object";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/is-object";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/object-create";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/create-property-descriptor";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/get-iterator";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/get-iterator-method";
+import   "a16f63bd039b4ef62c6bed9a8239f5c3:../internals/well-known-symbol";
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$$fetch = $a16f63bd039b4ef62c6bed9a8239f5c3$import$acc15958b3da080('fetch');
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$Headers = $a16f63bd039b4ef62c6bed9a8239f5c3$import$acc15958b3da080('Headers');
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$ITERATOR = $a16f63bd039b4ef62c6bed9a8239f5c3$import$88242bc6a9673a44('iterator');
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$URL_SEARCH_PARAMS = 'URLSearchParams';
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$URL_SEARCH_PARAMS_ITERATOR = $a16f63bd039b4ef62c6bed9a8239f5c3$var$URL_SEARCH_PARAMS + 'Iterator';
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$setInternalState = $a16f63bd039b4ef62c6bed9a8239f5c3$import$2c03d954288482bc$77f8d2fc923b14e3;
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState = $a16f63bd039b4ef62c6bed9a8239f5c3$import$2c03d954288482bc$41aa07b58faf19b8($a16f63bd039b4ef62c6bed9a8239f5c3$var$URL_SEARCH_PARAMS);
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalIteratorState = $a16f63bd039b4ef62c6bed9a8239f5c3$import$2c03d954288482bc$41aa07b58faf19b8($a16f63bd039b4ef62c6bed9a8239f5c3$var$URL_SEARCH_PARAMS_ITERATOR);
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$plus = /\+/g;
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$sequences = Array(4);
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$percentSequence = function(bytes) {
+    return $a16f63bd039b4ef62c6bed9a8239f5c3$var$sequences[bytes - 1] || ($a16f63bd039b4ef62c6bed9a8239f5c3$var$sequences[bytes - 1] = RegExp('((?:%[\\da-f]{2}){' + bytes + '})', 'gi'));
+};
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$percentDecode = function(sequence) {
+    try {
+        return decodeURIComponent(sequence);
+    } catch (error) {
+        return sequence;
+    }
+};
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$deserialize = function(it) {
+    var result = it.replace($a16f63bd039b4ef62c6bed9a8239f5c3$var$plus, ' ');
+    var bytes = 4;
+    try {
+        return decodeURIComponent(result);
+    } catch (error) {
+        while(bytes)result = result.replace($a16f63bd039b4ef62c6bed9a8239f5c3$var$percentSequence(bytes--), $a16f63bd039b4ef62c6bed9a8239f5c3$var$percentDecode);
+        return result;
+    }
+};
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$find = /[!'()~]|%20/g;
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$replace = {
+    '!': '%21',
+    "'": '%27',
+    '(': '%28',
+    ')': '%29',
+    '~': '%7E',
+    '%20': '+'
+};
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$replacer = function(match) {
+    return $a16f63bd039b4ef62c6bed9a8239f5c3$var$replace[match];
+};
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$serialize = function(it) {
+    return encodeURIComponent(it).replace($a16f63bd039b4ef62c6bed9a8239f5c3$var$find, $a16f63bd039b4ef62c6bed9a8239f5c3$var$replacer);
+};
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$parseSearchParams = function(result, query) {
+    if (query) {
+        var attributes = query.split('&');
+        var index = 0;
+        var attribute, entry;
+        while(index < attributes.length){
+            attribute = attributes[index++];
+            if (attribute.length) {
+                entry = attribute.split('=');
+                result.push({
+                    key: $a16f63bd039b4ef62c6bed9a8239f5c3$var$deserialize(entry.shift()),
+                    value: $a16f63bd039b4ef62c6bed9a8239f5c3$var$deserialize(entry.join('='))
+                });
+            }
+        }
+    }
+};
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$updateSearchParams = function(query) {
+    this.entries.length = 0;
+    $a16f63bd039b4ef62c6bed9a8239f5c3$var$parseSearchParams(this.entries, query);
+};
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$validateArgumentsLength = function(passed, required) {
+    if (passed < required) throw TypeError('Not enough arguments');
+};
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsIterator = $a16f63bd039b4ef62c6bed9a8239f5c3$import$19da86c835a1644d(function Iterator(params, kind) {
+    $a16f63bd039b4ef62c6bed9a8239f5c3$var$setInternalState(this, {
+        type: $a16f63bd039b4ef62c6bed9a8239f5c3$var$URL_SEARCH_PARAMS_ITERATOR,
+        iterator: $a16f63bd039b4ef62c6bed9a8239f5c3$import$bd63c92e80a2374c($a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState(params).entries),
+        kind: kind
+    });
+}, 'Iterator', function next() {
+    var state = $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalIteratorState(this);
+    var kind = state.kind;
+    var step = state.iterator.next();
+    var entry = step.value;
+    if (!step.done) step.value = kind === 'keys' ? entry.key : kind === 'values' ? entry.value : [
+        entry.key,
+        entry.value
+    ];
+    return step;
+});
+// `URLSearchParams` constructor
+// https://url.spec.whatwg.org/#interface-urlsearchparams
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsConstructor = function URLSearchParams1() {
+    $a16f63bd039b4ef62c6bed9a8239f5c3$import$65a2120eaf0c2a0a(this, $a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsConstructor, $a16f63bd039b4ef62c6bed9a8239f5c3$var$URL_SEARCH_PARAMS);
+    var init = arguments.length > 0 ? arguments[0] : undefined;
+    var that = this;
+    var entries = [];
+    var iteratorMethod, iterator, next1, step, entryIterator, entryNext, first, second, key;
+    $a16f63bd039b4ef62c6bed9a8239f5c3$var$setInternalState(that, {
+        type: $a16f63bd039b4ef62c6bed9a8239f5c3$var$URL_SEARCH_PARAMS,
+        entries: entries,
+        updateURL: function() {
+        },
+        updateSearchParams: $a16f63bd039b4ef62c6bed9a8239f5c3$var$updateSearchParams
+    });
+    if (init !== undefined) {
+        if ($a16f63bd039b4ef62c6bed9a8239f5c3$import$9294ccec169e68b9(init)) {
+            iteratorMethod = $a16f63bd039b4ef62c6bed9a8239f5c3$import$58c00865a7a01291(init);
+            if (typeof iteratorMethod === 'function') {
+                iterator = iteratorMethod.call(init);
+                next1 = iterator.next;
+                while(!(step = next1.call(iterator)).done){
+                    entryIterator = $a16f63bd039b4ef62c6bed9a8239f5c3$import$bd63c92e80a2374c($a16f63bd039b4ef62c6bed9a8239f5c3$import$cad8ba314ee735d6(step.value));
+                    entryNext = entryIterator.next;
+                    if ((first = entryNext.call(entryIterator)).done || (second = entryNext.call(entryIterator)).done || !entryNext.call(entryIterator).done) throw TypeError('Expected sequence with length 2');
+                    entries.push({
+                        key: first.value + '',
+                        value: second.value + ''
+                    });
+                }
+            } else for(key in init)if ($a16f63bd039b4ef62c6bed9a8239f5c3$import$7e2f6fc726b1debe(init, key)) entries.push({
+                key: key,
+                value: init[key] + ''
+            });
+        } else $a16f63bd039b4ef62c6bed9a8239f5c3$var$parseSearchParams(entries, typeof init === 'string' ? init.charAt(0) === '?' ? init.slice(1) : init : init + '');
+    }
+};
+var $a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsPrototype = $a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsConstructor.prototype;
+$a16f63bd039b4ef62c6bed9a8239f5c3$import$ce46ad3e687b31c4($a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsPrototype, {
+    // `URLSearchParams.prototype.append` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-append
+    append: function append(name, value) {
+        $a16f63bd039b4ef62c6bed9a8239f5c3$var$validateArgumentsLength(arguments.length, 2);
+        var state = $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState(this);
+        state.entries.push({
+            key: name + '',
+            value: value + ''
+        });
+        state.updateURL();
+    },
+    // `URLSearchParams.prototype.delete` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-delete
+    'delete': function(name) {
+        $a16f63bd039b4ef62c6bed9a8239f5c3$var$validateArgumentsLength(arguments.length, 1);
+        var state = $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState(this);
+        var entries = state.entries;
+        var key = name + '';
+        var index = 0;
+        while(index < entries.length)if (entries[index].key === key) entries.splice(index, 1);
+        else index++;
+        state.updateURL();
+    },
+    // `URLSearchParams.prototype.get` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-get
+    get: function get(name) {
+        $a16f63bd039b4ef62c6bed9a8239f5c3$var$validateArgumentsLength(arguments.length, 1);
+        var entries = $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState(this).entries;
+        var key = name + '';
+        var index = 0;
+        for(; index < entries.length; index++){
+            if (entries[index].key === key) return entries[index].value;
+        }
+        return null;
+    },
+    // `URLSearchParams.prototype.getAll` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-getall
+    getAll: function getAll(name) {
+        $a16f63bd039b4ef62c6bed9a8239f5c3$var$validateArgumentsLength(arguments.length, 1);
+        var entries = $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState(this).entries;
+        var key = name + '';
+        var result = [];
+        var index = 0;
+        for(; index < entries.length; index++)if (entries[index].key === key) result.push(entries[index].value);
+        return result;
+    },
+    // `URLSearchParams.prototype.has` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-has
+    has: function has(name) {
+        $a16f63bd039b4ef62c6bed9a8239f5c3$var$validateArgumentsLength(arguments.length, 1);
+        var entries = $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState(this).entries;
+        var key = name + '';
+        var index = 0;
+        while(index < entries.length){
+            if (entries[index++].key === key) return true;
+        }
+        return false;
+    },
+    // `URLSearchParams.prototype.set` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-set
+    set: function set(name, value) {
+        $a16f63bd039b4ef62c6bed9a8239f5c3$var$validateArgumentsLength(arguments.length, 1);
+        var state = $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState(this);
+        var entries = state.entries;
+        var found = false;
+        var key = name + '';
+        var val = value + '';
+        var index = 0;
+        var entry;
+        for(; index < entries.length; index++){
+            entry = entries[index];
+            if (entry.key === key) {
+                if (found) entries.splice(index--, 1);
+                else {
+                    found = true;
+                    entry.value = val;
+                }
+            }
+        }
+        if (!found) entries.push({
+            key: key,
+            value: val
+        });
+        state.updateURL();
+    },
+    // `URLSearchParams.prototype.sort` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-sort
+    sort: function sort() {
+        var state = $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState(this);
+        var entries = state.entries;
+        // Array#sort is not stable in some engines
+        var slice = entries.slice();
+        var entry, entriesIndex, sliceIndex;
+        entries.length = 0;
+        for(sliceIndex = 0; sliceIndex < slice.length; sliceIndex++){
+            entry = slice[sliceIndex];
+            for(entriesIndex = 0; entriesIndex < sliceIndex; entriesIndex++)if (entries[entriesIndex].key > entry.key) {
+                entries.splice(entriesIndex, 0, entry);
+                break;
+            }
+            if (entriesIndex === sliceIndex) entries.push(entry);
+        }
+        state.updateURL();
+    },
+    // `URLSearchParams.prototype.forEach` method
+    forEach: function forEach(callback/* , thisArg */ ) {
+        var entries = $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState(this).entries;
+        var boundFunction = $a16f63bd039b4ef62c6bed9a8239f5c3$import$66177e0ceb63850c(callback, arguments.length > 1 ? arguments[1] : undefined, 3);
+        var index = 0;
+        var entry;
+        while(index < entries.length){
+            entry = entries[index++];
+            boundFunction(entry.value, entry.key, this);
+        }
+    },
+    // `URLSearchParams.prototype.keys` method
+    keys: function keys() {
+        return new $a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsIterator(this, 'keys');
+    },
+    // `URLSearchParams.prototype.values` method
+    values: function values() {
+        return new $a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsIterator(this, 'values');
+    },
+    // `URLSearchParams.prototype.entries` method
+    entries: function entries() {
+        return new $a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsIterator(this, 'entries');
+    }
+}, {
+    enumerable: true
+});
+// `URLSearchParams.prototype[@@iterator]` method
+$a16f63bd039b4ef62c6bed9a8239f5c3$import$715a1a2c44d923e3($a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsPrototype, $a16f63bd039b4ef62c6bed9a8239f5c3$var$ITERATOR, $a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsPrototype.entries);
+// `URLSearchParams.prototype.toString` method
+// https://url.spec.whatwg.org/#urlsearchparams-stringification-behavior
+$a16f63bd039b4ef62c6bed9a8239f5c3$import$715a1a2c44d923e3($a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsPrototype, 'toString', function toString() {
+    var entries = $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState(this).entries;
+    var result = [];
+    var index = 0;
+    var entry;
+    while(index < entries.length){
+        entry = entries[index++];
+        result.push($a16f63bd039b4ef62c6bed9a8239f5c3$var$serialize(entry.key) + '=' + $a16f63bd039b4ef62c6bed9a8239f5c3$var$serialize(entry.value));
+    }
+    return result.join('&');
+}, {
+    enumerable: true
+});
+$a16f63bd039b4ef62c6bed9a8239f5c3$import$c84072deb0264877($a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsConstructor, $a16f63bd039b4ef62c6bed9a8239f5c3$var$URL_SEARCH_PARAMS);
+$a16f63bd039b4ef62c6bed9a8239f5c3$import$1bb3f1a3ac631152({
+    global: true,
+    forced: !$a16f63bd039b4ef62c6bed9a8239f5c3$import$2069d99f676e2d40
+}, {
+    URLSearchParams: $a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsConstructor
+});
+// Wrap `fetch` for correct work with polyfilled `URLSearchParams`
+// https://github.com/zloirock/core-js/issues/674
+if (!$a16f63bd039b4ef62c6bed9a8239f5c3$import$2069d99f676e2d40 && typeof $a16f63bd039b4ef62c6bed9a8239f5c3$var$$fetch == 'function' && typeof $a16f63bd039b4ef62c6bed9a8239f5c3$var$Headers == 'function') $a16f63bd039b4ef62c6bed9a8239f5c3$import$1bb3f1a3ac631152({
+    global: true,
+    enumerable: true,
+    forced: true
+}, {
+    fetch: function fetch(input/* , init */ ) {
+        var args = [
+            input
+        ];
+        var init, body, headers;
+        if (arguments.length > 1) {
+            init = arguments[1];
+            if ($a16f63bd039b4ef62c6bed9a8239f5c3$import$9294ccec169e68b9(init)) {
+                body = init.body;
+                if ($a16f63bd039b4ef62c6bed9a8239f5c3$import$2c88fa3abfc1c398(body) === $a16f63bd039b4ef62c6bed9a8239f5c3$var$URL_SEARCH_PARAMS) {
+                    headers = init.headers ? new $a16f63bd039b4ef62c6bed9a8239f5c3$var$Headers(init.headers) : new $a16f63bd039b4ef62c6bed9a8239f5c3$var$Headers();
+                    if (!headers.has('content-type')) headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+                    init = $a16f63bd039b4ef62c6bed9a8239f5c3$import$d8db146559ed3979(init, {
+                        body: $a16f63bd039b4ef62c6bed9a8239f5c3$import$ec93b3e5f64a8991(0, String(body)),
+                        headers: $a16f63bd039b4ef62c6bed9a8239f5c3$import$ec93b3e5f64a8991(0, headers)
+                    });
+                }
+            }
+            args.push(init);
+        }
+        return $a16f63bd039b4ef62c6bed9a8239f5c3$var$$fetch.apply(this, args);
+    }
+});
+$a16f63bd039b4ef62c6bed9a8239f5c3$exports = {
+    URLSearchParams: $a16f63bd039b4ef62c6bed9a8239f5c3$var$URLSearchParamsConstructor,
+    getState: $a16f63bd039b4ef62c6bed9a8239f5c3$var$getInternalParamsState
+};

@@ -1,0 +1,32 @@
+import   "1df9542d53481ccb48cc9dd2304aef52:../internals/to-indexed-object";
+import   "1df9542d53481ccb48cc9dd2304aef52:../internals/to-length";
+import   "1df9542d53481ccb48cc9dd2304aef52:../internals/to-absolute-index";
+// `Array.prototype.{ indexOf, includes }` methods implementation
+var $1df9542d53481ccb48cc9dd2304aef52$var$createMethod = function(IS_INCLUDES) {
+    return function($this, el, fromIndex) {
+        var O = $1df9542d53481ccb48cc9dd2304aef52$import$73e80bdb170d55b7($this);
+        var length = $1df9542d53481ccb48cc9dd2304aef52$import$4102f61a7d1ec5ae(O.length);
+        var index = $1df9542d53481ccb48cc9dd2304aef52$import$bcb4abe55a109f79(fromIndex, length);
+        var value;
+        // Array#includes uses SameValueZero equality algorithm
+        // eslint-disable-next-line no-self-compare -- NaN check
+        if (IS_INCLUDES && el != el) while(length > index){
+            value = O[index++];
+            // eslint-disable-next-line no-self-compare -- NaN check
+            if (value != value) return true;
+        // Array#indexOf ignores holes, Array#includes - not
+        }
+        else for(; length > index; index++){
+            if ((IS_INCLUDES || index in O) && O[index] === el) return IS_INCLUDES || index || 0;
+        }
+        return !IS_INCLUDES && -1;
+    };
+};
+$1df9542d53481ccb48cc9dd2304aef52$exports = {
+    // `Array.prototype.includes` method
+    // https://tc39.es/ecma262/#sec-array.prototype.includes
+    includes: $1df9542d53481ccb48cc9dd2304aef52$var$createMethod(true),
+    // `Array.prototype.indexOf` method
+    // https://tc39.es/ecma262/#sec-array.prototype.indexof
+    indexOf: $1df9542d53481ccb48cc9dd2304aef52$var$createMethod(false)
+};

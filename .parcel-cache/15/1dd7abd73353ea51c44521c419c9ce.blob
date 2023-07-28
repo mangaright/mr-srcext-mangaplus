@@ -1,0 +1,13 @@
+'use strict';
+import   "279089f6a6e5507ffd7321fbbf53ecd8:../internals/export";
+// `URL.prototype.toJSON` method
+// https://url.spec.whatwg.org/#dom-url-tojson
+$279089f6a6e5507ffd7321fbbf53ecd8$import$1bb3f1a3ac631152({
+    target: 'URL',
+    proto: true,
+    enumerable: true
+}, {
+    toJSON: function toJSON() {
+        return URL.prototype.toString.call(this);
+    }
+});

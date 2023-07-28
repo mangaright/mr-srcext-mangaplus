@@ -1,0 +1,22 @@
+import   "30be42d4337fb5e870d8c7cc1a80c7f2:../internals/to-integer";
+import   "30be42d4337fb5e870d8c7cc1a80c7f2:../internals/require-object-coercible";
+// `String.prototype.{ codePointAt, at }` methods implementation
+var $30be42d4337fb5e870d8c7cc1a80c7f2$var$createMethod = function(CONVERT_TO_STRING) {
+    return function($this, pos) {
+        var S = String($30be42d4337fb5e870d8c7cc1a80c7f2$import$cb96119f17424999($this));
+        var position = $30be42d4337fb5e870d8c7cc1a80c7f2$import$3760fb9e29f29d49(pos);
+        var size = S.length;
+        var first, second;
+        if (position < 0 || position >= size) return CONVERT_TO_STRING ? '' : undefined;
+        first = S.charCodeAt(position);
+        return first < 55296 || first > 56319 || position + 1 === size || (second = S.charCodeAt(position + 1)) < 56320 || second > 57343 ? CONVERT_TO_STRING ? S.charAt(position) : first : CONVERT_TO_STRING ? S.slice(position, position + 2) : (first - 55296 << 10) + (second - 56320) + 65536;
+    };
+};
+$30be42d4337fb5e870d8c7cc1a80c7f2$exports = {
+    // `String.prototype.codePointAt` method
+    // https://tc39.es/ecma262/#sec-string.prototype.codepointat
+    codeAt: $30be42d4337fb5e870d8c7cc1a80c7f2$var$createMethod(false),
+    // `String.prototype.at` method
+    // https://github.com/mathiasbynens/String.prototype.at
+    charAt: $30be42d4337fb5e870d8c7cc1a80c7f2$var$createMethod(true)
+};

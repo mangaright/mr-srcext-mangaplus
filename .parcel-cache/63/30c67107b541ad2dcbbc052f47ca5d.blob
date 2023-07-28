@@ -1,0 +1,11 @@
+import   "0ab9e8352e27499b6328297be10e4a42:../internals/an-object";
+import   "0ab9e8352e27499b6328297be10e4a42:../internals/iterator-close";
+// call something on iterator step with safe closing on error
+$0ab9e8352e27499b6328297be10e4a42$exports = function(iterator, fn, value, ENTRIES) {
+    try {
+        return ENTRIES ? fn($0ab9e8352e27499b6328297be10e4a42$import$cad8ba314ee735d6(value)[0], value[1]) : fn(value);
+    } catch (error) {
+        $0ab9e8352e27499b6328297be10e4a42$import$adeb365b4fa1ffdb(iterator);
+        throw error;
+    }
+};

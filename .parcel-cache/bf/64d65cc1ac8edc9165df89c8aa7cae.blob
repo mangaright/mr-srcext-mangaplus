@@ -1,0 +1,64 @@
+'use strict';
+import   "a9c9d1a0187027185aa4e77501cc71d1:../internals/to-indexed-object";
+import   "a9c9d1a0187027185aa4e77501cc71d1:../internals/add-to-unscopables";
+import   "a9c9d1a0187027185aa4e77501cc71d1:../internals/iterators";
+import   "a9c9d1a0187027185aa4e77501cc71d1:../internals/internal-state";
+import   "a9c9d1a0187027185aa4e77501cc71d1:../internals/define-iterator";
+var $a9c9d1a0187027185aa4e77501cc71d1$var$ARRAY_ITERATOR = 'Array Iterator';
+var $a9c9d1a0187027185aa4e77501cc71d1$var$setInternalState = $a9c9d1a0187027185aa4e77501cc71d1$import$2c03d954288482bc$77f8d2fc923b14e3;
+var $a9c9d1a0187027185aa4e77501cc71d1$var$getInternalState = $a9c9d1a0187027185aa4e77501cc71d1$import$2c03d954288482bc$41aa07b58faf19b8($a9c9d1a0187027185aa4e77501cc71d1$var$ARRAY_ITERATOR);
+// `Array.prototype.entries` method
+// https://tc39.es/ecma262/#sec-array.prototype.entries
+// `Array.prototype.keys` method
+// https://tc39.es/ecma262/#sec-array.prototype.keys
+// `Array.prototype.values` method
+// https://tc39.es/ecma262/#sec-array.prototype.values
+// `Array.prototype[@@iterator]` method
+// https://tc39.es/ecma262/#sec-array.prototype-@@iterator
+// `CreateArrayIterator` internal method
+// https://tc39.es/ecma262/#sec-createarrayiterator
+$a9c9d1a0187027185aa4e77501cc71d1$exports = $a9c9d1a0187027185aa4e77501cc71d1$import$17408e3b717adcbc(Array, 'Array', function(iterated, kind) {
+    $a9c9d1a0187027185aa4e77501cc71d1$var$setInternalState(this, {
+        type: $a9c9d1a0187027185aa4e77501cc71d1$var$ARRAY_ITERATOR,
+        target: $a9c9d1a0187027185aa4e77501cc71d1$import$73e80bdb170d55b7(iterated),
+        index: 0,
+        kind: kind
+    });
+// `%ArrayIteratorPrototype%.next` method
+// https://tc39.es/ecma262/#sec-%arrayiteratorprototype%.next
+}, function() {
+    var state = $a9c9d1a0187027185aa4e77501cc71d1$var$getInternalState(this);
+    var target = state.target;
+    var kind = state.kind;
+    var index = state.index++;
+    if (!target || index >= target.length) {
+        state.target = undefined;
+        return {
+            value: undefined,
+            done: true
+        };
+    }
+    if (kind == 'keys') return {
+        value: index,
+        done: false
+    };
+    if (kind == 'values') return {
+        value: target[index],
+        done: false
+    };
+    return {
+        value: [
+            index,
+            target[index]
+        ],
+        done: false
+    };
+}, 'values');
+// argumentsList[@@iterator] is %ArrayProto_values%
+// https://tc39.es/ecma262/#sec-createunmappedargumentsobject
+// https://tc39.es/ecma262/#sec-createmappedargumentsobject
+$a9c9d1a0187027185aa4e77501cc71d1$import$617293915b6aef2$90395f8b7f0b6d5a = $a9c9d1a0187027185aa4e77501cc71d1$import$617293915b6aef2$d4a625febc06a234;
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+$a9c9d1a0187027185aa4e77501cc71d1$import$5d18bfe1c15e4f32('keys');
+$a9c9d1a0187027185aa4e77501cc71d1$import$5d18bfe1c15e4f32('values');
+$a9c9d1a0187027185aa4e77501cc71d1$import$5d18bfe1c15e4f32('entries');

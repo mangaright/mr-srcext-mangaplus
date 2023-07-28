@@ -1,0 +1,2 @@
+import   "f2095636704bc82a2fd4216f496c4b95:../internals/native-symbol";
+$f2095636704bc82a2fd4216f496c4b95$exports = $f2095636704bc82a2fd4216f496c4b95$import$4e2d447df5be34c && !Symbol.sham && typeof Symbol.iterator == 'symbol';

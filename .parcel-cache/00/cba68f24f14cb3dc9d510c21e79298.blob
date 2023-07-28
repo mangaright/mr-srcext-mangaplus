@@ -1,0 +1,64 @@
+'use strict';
+import   "9918ecc57fb2ec0956b328d9a10f940b:../internals/descriptors";
+import   "9918ecc57fb2ec0956b328d9a10f940b:../internals/fails";
+import   "9918ecc57fb2ec0956b328d9a10f940b:../internals/object-keys";
+import   "9918ecc57fb2ec0956b328d9a10f940b:../internals/object-get-own-property-symbols";
+import   "9918ecc57fb2ec0956b328d9a10f940b:../internals/object-property-is-enumerable";
+import   "9918ecc57fb2ec0956b328d9a10f940b:../internals/to-object";
+import   "9918ecc57fb2ec0956b328d9a10f940b:../internals/indexed-object";
+// eslint-disable-next-line es/no-object-assign -- safe
+var $9918ecc57fb2ec0956b328d9a10f940b$var$$assign = Object.assign;
+// eslint-disable-next-line es/no-object-defineproperty -- required for testing
+var $9918ecc57fb2ec0956b328d9a10f940b$var$defineProperty = Object.defineProperty;
+// `Object.assign` method
+// https://tc39.es/ecma262/#sec-object.assign
+$9918ecc57fb2ec0956b328d9a10f940b$exports = !$9918ecc57fb2ec0956b328d9a10f940b$var$$assign || $9918ecc57fb2ec0956b328d9a10f940b$import$9936d02511e757dc(function() {
+    // should have correct order of operations (Edge bug)
+    if ($9918ecc57fb2ec0956b328d9a10f940b$import$9e95520c426f46b4 && $9918ecc57fb2ec0956b328d9a10f940b$var$$assign({
+        b: 1
+    }, $9918ecc57fb2ec0956b328d9a10f940b$var$$assign($9918ecc57fb2ec0956b328d9a10f940b$var$defineProperty({
+    }, 'a', {
+        enumerable: true,
+        get: function() {
+            $9918ecc57fb2ec0956b328d9a10f940b$var$defineProperty(this, 'b', {
+                value: 3,
+                enumerable: false
+            });
+        }
+    }), {
+        b: 2
+    })).b !== 1) return true;
+    // should work with symbols and should have deterministic property order (V8 bug)
+    var A = {
+    };
+    var B = {
+    };
+    // eslint-disable-next-line es/no-symbol -- safe
+    var symbol = Symbol();
+    var alphabet = 'abcdefghijklmnopqrst';
+    A[symbol] = 7;
+    alphabet.split('').forEach(function(chr) {
+        B[chr] = chr;
+    });
+    return $9918ecc57fb2ec0956b328d9a10f940b$var$$assign({
+    }, A)[symbol] != 7 || $9918ecc57fb2ec0956b328d9a10f940b$import$ca5d317697a1e62($9918ecc57fb2ec0956b328d9a10f940b$var$$assign({
+    }, B)).join('') != alphabet;
+}) ? function assign(target, source) {
+    var T = $9918ecc57fb2ec0956b328d9a10f940b$import$565dce0892f29b05(target);
+    var argumentsLength = arguments.length;
+    var index = 1;
+    var getOwnPropertySymbols = $9918ecc57fb2ec0956b328d9a10f940b$import$fc62a4e17c061232$ffb27d6bd8d1eb33;
+    var propertyIsEnumerable = $9918ecc57fb2ec0956b328d9a10f940b$import$6db18f9a4bbb475a$ffb27d6bd8d1eb33;
+    while(argumentsLength > index){
+        var S = $9918ecc57fb2ec0956b328d9a10f940b$import$b563c836d980da8e(arguments[index++]);
+        var keys = getOwnPropertySymbols ? $9918ecc57fb2ec0956b328d9a10f940b$import$ca5d317697a1e62(S).concat(getOwnPropertySymbols(S)) : $9918ecc57fb2ec0956b328d9a10f940b$import$ca5d317697a1e62(S);
+        var length = keys.length;
+        var j = 0;
+        var key;
+        while(length > j){
+            key = keys[j++];
+            if (!$9918ecc57fb2ec0956b328d9a10f940b$import$9e95520c426f46b4 || propertyIsEnumerable.call(S, key)) T[key] = S[key];
+        }
+    }
+    return T;
+} : $9918ecc57fb2ec0956b328d9a10f940b$var$$assign;

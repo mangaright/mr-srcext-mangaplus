@@ -1,0 +1,34 @@
+'use strict';
+import   "73f8721ffa3cf1c0e6395de4a5af0fae:../internals/string-multibyte";
+var $73f8721ffa3cf1c0e6395de4a5af0fae$require$charAt = $73f8721ffa3cf1c0e6395de4a5af0fae$import$98a666e19560cc99$d8fc1aff1f0514ba;
+import   "73f8721ffa3cf1c0e6395de4a5af0fae:../internals/internal-state";
+import   "73f8721ffa3cf1c0e6395de4a5af0fae:../internals/define-iterator";
+var $73f8721ffa3cf1c0e6395de4a5af0fae$var$STRING_ITERATOR = 'String Iterator';
+var $73f8721ffa3cf1c0e6395de4a5af0fae$var$setInternalState = $73f8721ffa3cf1c0e6395de4a5af0fae$import$2c03d954288482bc$77f8d2fc923b14e3;
+var $73f8721ffa3cf1c0e6395de4a5af0fae$var$getInternalState = $73f8721ffa3cf1c0e6395de4a5af0fae$import$2c03d954288482bc$41aa07b58faf19b8($73f8721ffa3cf1c0e6395de4a5af0fae$var$STRING_ITERATOR);
+// `String.prototype[@@iterator]` method
+// https://tc39.es/ecma262/#sec-string.prototype-@@iterator
+$73f8721ffa3cf1c0e6395de4a5af0fae$import$17408e3b717adcbc(String, 'String', function(iterated) {
+    $73f8721ffa3cf1c0e6395de4a5af0fae$var$setInternalState(this, {
+        type: $73f8721ffa3cf1c0e6395de4a5af0fae$var$STRING_ITERATOR,
+        string: String(iterated),
+        index: 0
+    });
+// `%StringIteratorPrototype%.next` method
+// https://tc39.es/ecma262/#sec-%stringiteratorprototype%.next
+}, function next() {
+    var state = $73f8721ffa3cf1c0e6395de4a5af0fae$var$getInternalState(this);
+    var string = state.string;
+    var index = state.index;
+    var point;
+    if (index >= string.length) return {
+        value: undefined,
+        done: true
+    };
+    point = $73f8721ffa3cf1c0e6395de4a5af0fae$require$charAt(string, index);
+    state.index += point.length;
+    return {
+        value: point,
+        done: false
+    };
+});

@@ -1,0 +1,5 @@
+import   "0da2086847a1b6ad8652cec65fd8b33b:../internals/is-object";
+$0da2086847a1b6ad8652cec65fd8b33b$exports = function(it) {
+    if (!$0da2086847a1b6ad8652cec65fd8b33b$import$9294ccec169e68b9(it) && it !== null) throw TypeError("Can't set " + String(it) + ' as a prototype');
+    return it;
+};

@@ -1,0 +1,5 @@
+import   "8fa774229cee0ded4d5743c4a6002d55:../internals/redefine";
+$8fa774229cee0ded4d5743c4a6002d55$exports = function(target, src, options) {
+    for(var key in src)$8fa774229cee0ded4d5743c4a6002d55$import$715a1a2c44d923e3(target, key, src[key], options);
+    return target;
+};

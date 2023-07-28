@@ -1,0 +1,16 @@
+var $c842eadf5e8a74881a9f3a0d50f97422$export$ffb27d6bd8d1eb33;
+'use strict';
+var $c842eadf5e8a74881a9f3a0d50f97422$var$$propertyIsEnumerable = {
+}.propertyIsEnumerable;
+// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+var $c842eadf5e8a74881a9f3a0d50f97422$var$getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+// Nashorn ~ JDK8 bug
+var $c842eadf5e8a74881a9f3a0d50f97422$var$NASHORN_BUG = $c842eadf5e8a74881a9f3a0d50f97422$var$getOwnPropertyDescriptor && !$c842eadf5e8a74881a9f3a0d50f97422$var$$propertyIsEnumerable.call({
+    1: 2
+}, 1);
+// `Object.prototype.propertyIsEnumerable` method implementation
+// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
+$c842eadf5e8a74881a9f3a0d50f97422$export$ffb27d6bd8d1eb33 = $c842eadf5e8a74881a9f3a0d50f97422$var$NASHORN_BUG ? function propertyIsEnumerable(V) {
+    var descriptor = $c842eadf5e8a74881a9f3a0d50f97422$var$getOwnPropertyDescriptor(this, V);
+    return !!descriptor && descriptor.enumerable;
+} : $c842eadf5e8a74881a9f3a0d50f97422$var$$propertyIsEnumerable;

@@ -1,0 +1,21 @@
+var $ac7e75b40d49635f1fd187c495f98d04$export$ffb27d6bd8d1eb33;
+import   "ac7e75b40d49635f1fd187c495f98d04:../internals/descriptors";
+import   "ac7e75b40d49635f1fd187c495f98d04:../internals/object-property-is-enumerable";
+import   "ac7e75b40d49635f1fd187c495f98d04:../internals/create-property-descriptor";
+import   "ac7e75b40d49635f1fd187c495f98d04:../internals/to-indexed-object";
+import   "ac7e75b40d49635f1fd187c495f98d04:../internals/to-primitive";
+import   "ac7e75b40d49635f1fd187c495f98d04:../internals/has";
+import   "ac7e75b40d49635f1fd187c495f98d04:../internals/ie8-dom-define";
+// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+var $ac7e75b40d49635f1fd187c495f98d04$var$$getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+// `Object.getOwnPropertyDescriptor` method
+// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
+$ac7e75b40d49635f1fd187c495f98d04$export$ffb27d6bd8d1eb33 = $ac7e75b40d49635f1fd187c495f98d04$import$9e95520c426f46b4 ? $ac7e75b40d49635f1fd187c495f98d04$var$$getOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
+    O = $ac7e75b40d49635f1fd187c495f98d04$import$73e80bdb170d55b7(O);
+    P = $ac7e75b40d49635f1fd187c495f98d04$import$c0dc3853fdc9c45f(P, true);
+    if ($ac7e75b40d49635f1fd187c495f98d04$import$2effc618c7db7374) try {
+        return $ac7e75b40d49635f1fd187c495f98d04$var$$getOwnPropertyDescriptor(O, P);
+    } catch (error) {
+    }
+    if ($ac7e75b40d49635f1fd187c495f98d04$import$7e2f6fc726b1debe(O, P)) return $ac7e75b40d49635f1fd187c495f98d04$import$ec93b3e5f64a8991(!$ac7e75b40d49635f1fd187c495f98d04$import$6db18f9a4bbb475a$ffb27d6bd8d1eb33.call(O, P), O[P]);
+};

@@ -1,0 +1,10 @@
+var $39ffec6e78a8ddd861d3ae9cf3ea9305$export$ffb27d6bd8d1eb33;
+import   "39ffec6e78a8ddd861d3ae9cf3ea9305:../internals/object-keys-internal";
+import   "39ffec6e78a8ddd861d3ae9cf3ea9305:../internals/enum-bug-keys";
+var $39ffec6e78a8ddd861d3ae9cf3ea9305$var$hiddenKeys = $39ffec6e78a8ddd861d3ae9cf3ea9305$import$f83336f12666caba$dde0d4a9e80fb26f('length', 'prototype');
+// `Object.getOwnPropertyNames` method
+// https://tc39.es/ecma262/#sec-object.getownpropertynames
+// eslint-disable-next-line es/no-object-getownpropertynames -- safe
+$39ffec6e78a8ddd861d3ae9cf3ea9305$export$ffb27d6bd8d1eb33 = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+    return $39ffec6e78a8ddd861d3ae9cf3ea9305$import$41223fbc22a1851e(O, $39ffec6e78a8ddd861d3ae9cf3ea9305$var$hiddenKeys);
+};

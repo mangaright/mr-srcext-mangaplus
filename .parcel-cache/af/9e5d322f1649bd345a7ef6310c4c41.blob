@@ -1,0 +1,14 @@
+import   "1cd837b491e4284640111b92c888e553:../internals/fails";
+var $1cd837b491e4284640111b92c888e553$var$replacement = /#|\.prototype\./;
+var $1cd837b491e4284640111b92c888e553$var$isForced = function(feature, detection) {
+    var value = $1cd837b491e4284640111b92c888e553$var$data[$1cd837b491e4284640111b92c888e553$var$normalize(feature)];
+    return value == $1cd837b491e4284640111b92c888e553$var$POLYFILL ? true : value == $1cd837b491e4284640111b92c888e553$var$NATIVE ? false : typeof detection == 'function' ? $1cd837b491e4284640111b92c888e553$import$9936d02511e757dc(detection) : !!detection;
+};
+var $1cd837b491e4284640111b92c888e553$var$normalize = $1cd837b491e4284640111b92c888e553$var$isForced.normalize = function(string) {
+    return String(string).replace($1cd837b491e4284640111b92c888e553$var$replacement, '.').toLowerCase();
+};
+var $1cd837b491e4284640111b92c888e553$var$data = $1cd837b491e4284640111b92c888e553$var$isForced.data = {
+};
+var $1cd837b491e4284640111b92c888e553$var$NATIVE = $1cd837b491e4284640111b92c888e553$var$isForced.NATIVE = 'N';
+var $1cd837b491e4284640111b92c888e553$var$POLYFILL = $1cd837b491e4284640111b92c888e553$var$isForced.POLYFILL = 'P';
+$1cd837b491e4284640111b92c888e553$exports = $1cd837b491e4284640111b92c888e553$var$isForced;

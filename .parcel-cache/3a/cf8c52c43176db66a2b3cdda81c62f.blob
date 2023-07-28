@@ -1,0 +1,8 @@
+import   "132058518afa29666fca0c880e571fd6:../internals/path";
+import   "132058518afa29666fca0c880e571fd6:../internals/global";
+var $132058518afa29666fca0c880e571fd6$var$aFunction = function(variable) {
+    return typeof variable == 'function' ? variable : undefined;
+};
+$132058518afa29666fca0c880e571fd6$exports = function(namespace, method) {
+    return arguments.length < 2 ? $132058518afa29666fca0c880e571fd6$var$aFunction($132058518afa29666fca0c880e571fd6$import$e5cc12b6eadfe20b[namespace]) || $132058518afa29666fca0c880e571fd6$var$aFunction($132058518afa29666fca0c880e571fd6$import$da678c04728da253[namespace]) : $132058518afa29666fca0c880e571fd6$import$e5cc12b6eadfe20b[namespace] && $132058518afa29666fca0c880e571fd6$import$e5cc12b6eadfe20b[namespace][method] || $132058518afa29666fca0c880e571fd6$import$da678c04728da253[namespace] && $132058518afa29666fca0c880e571fd6$import$da678c04728da253[namespace][method];
+};

@@ -1,0 +1,10 @@
+import   "637f0c6750b29d34e6c47166109849a6:../internals/to-integer";
+var $637f0c6750b29d34e6c47166109849a6$var$max = Math.max;
+var $637f0c6750b29d34e6c47166109849a6$var$min = Math.min;
+// Helper for a popular repeating case of the spec:
+// Let integer be ? ToInteger(index).
+// If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
+$637f0c6750b29d34e6c47166109849a6$exports = function(index, length) {
+    var integer = $637f0c6750b29d34e6c47166109849a6$import$3760fb9e29f29d49(index);
+    return integer < 0 ? $637f0c6750b29d34e6c47166109849a6$var$max(integer + length, 0) : $637f0c6750b29d34e6c47166109849a6$var$min(integer, length);
+};

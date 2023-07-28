@@ -1,0 +1,10 @@
+import   "9a6c371cdb9ff564125084c1968752d0:../internals/engine-v8-version";
+import   "9a6c371cdb9ff564125084c1968752d0:../internals/fails";
+// eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
+$9a6c371cdb9ff564125084c1968752d0$exports = !!Object.getOwnPropertySymbols && !$9a6c371cdb9ff564125084c1968752d0$import$9936d02511e757dc(function() {
+    var symbol = Symbol();
+    // Chrome 38 Symbol has incorrect toString conversion
+    // `get-own-property-symbols` polyfill symbols converted to object are not Symbol instances
+    return !String(symbol) || !(Object(symbol) instanceof Symbol) || // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
+    !Symbol.sham && $9a6c371cdb9ff564125084c1968752d0$import$aa08777f3c690dd7 && $9a6c371cdb9ff564125084c1968752d0$import$aa08777f3c690dd7 < 41;
+});

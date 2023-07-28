@@ -1,0 +1,10 @@
+// IE8- don't enum bug keys
+$50854323b0b1fd8fa33b0b20629e4c10$exports = [
+    'constructor',
+    'hasOwnProperty',
+    'isPrototypeOf',
+    'propertyIsEnumerable',
+    'toLocaleString',
+    'toString',
+    'valueOf'
+];

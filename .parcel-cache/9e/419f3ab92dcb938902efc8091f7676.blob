@@ -1,0 +1,71 @@
+import   "ce89a7b1d333fb0bd78877ed8197b238:../internals/an-object";
+import   "ce89a7b1d333fb0bd78877ed8197b238:../internals/object-define-properties";
+import   "ce89a7b1d333fb0bd78877ed8197b238:../internals/enum-bug-keys";
+import   "ce89a7b1d333fb0bd78877ed8197b238:../internals/hidden-keys";
+import   "ce89a7b1d333fb0bd78877ed8197b238:../internals/html";
+import   "ce89a7b1d333fb0bd78877ed8197b238:../internals/document-create-element";
+import   "ce89a7b1d333fb0bd78877ed8197b238:../internals/shared-key";
+var $ce89a7b1d333fb0bd78877ed8197b238$var$GT = '>';
+var $ce89a7b1d333fb0bd78877ed8197b238$var$LT = '<';
+var $ce89a7b1d333fb0bd78877ed8197b238$var$PROTOTYPE = 'prototype';
+var $ce89a7b1d333fb0bd78877ed8197b238$var$SCRIPT = 'script';
+var $ce89a7b1d333fb0bd78877ed8197b238$var$IE_PROTO = $ce89a7b1d333fb0bd78877ed8197b238$import$2d2d2b941f984340('IE_PROTO');
+var $ce89a7b1d333fb0bd78877ed8197b238$var$EmptyConstructor = function() {
+};
+var $ce89a7b1d333fb0bd78877ed8197b238$var$scriptTag = function(content) {
+    return $ce89a7b1d333fb0bd78877ed8197b238$var$LT + $ce89a7b1d333fb0bd78877ed8197b238$var$SCRIPT + $ce89a7b1d333fb0bd78877ed8197b238$var$GT + content + $ce89a7b1d333fb0bd78877ed8197b238$var$LT + '/' + $ce89a7b1d333fb0bd78877ed8197b238$var$SCRIPT + $ce89a7b1d333fb0bd78877ed8197b238$var$GT;
+};
+// Create object with fake `null` prototype: use ActiveX Object with cleared prototype
+var $ce89a7b1d333fb0bd78877ed8197b238$var$NullProtoObjectViaActiveX = function(activeXDocument) {
+    activeXDocument.write($ce89a7b1d333fb0bd78877ed8197b238$var$scriptTag(''));
+    activeXDocument.close();
+    var temp = activeXDocument.parentWindow.Object;
+    activeXDocument = null; // avoid memory leak
+    return temp;
+};
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var $ce89a7b1d333fb0bd78877ed8197b238$var$NullProtoObjectViaIFrame = function() {
+    // Thrash, waste and sodomy: IE GC bug
+    var iframe = $ce89a7b1d333fb0bd78877ed8197b238$import$62968a6197bf3a('iframe');
+    var JS = 'java' + $ce89a7b1d333fb0bd78877ed8197b238$var$SCRIPT + ':';
+    var iframeDocument;
+    iframe.style.display = 'none';
+    $ce89a7b1d333fb0bd78877ed8197b238$import$c02563b3428064ed$858777a3a7e2f5e9(iframe);
+    // https://github.com/zloirock/core-js/issues/475
+    iframe.src = String(JS);
+    iframeDocument = iframe.contentWindow.document;
+    iframeDocument.open();
+    iframeDocument.write($ce89a7b1d333fb0bd78877ed8197b238$var$scriptTag('document.F=Object'));
+    iframeDocument.close();
+    return iframeDocument.F;
+};
+// Check for document.domain and active x support
+// No need to use active x approach when document.domain is not set
+// see https://github.com/es-shims/es5-shim/issues/150
+// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
+// avoid IE GC bug
+var $ce89a7b1d333fb0bd78877ed8197b238$var$activeXDocument;
+var $ce89a7b1d333fb0bd78877ed8197b238$var$NullProtoObject = function() {
+    try {
+        /* global ActiveXObject -- old IE */ $ce89a7b1d333fb0bd78877ed8197b238$var$activeXDocument = document.domain && new ActiveXObject('htmlfile');
+    } catch (error) {
+    }
+    $ce89a7b1d333fb0bd78877ed8197b238$var$NullProtoObject = $ce89a7b1d333fb0bd78877ed8197b238$var$activeXDocument ? $ce89a7b1d333fb0bd78877ed8197b238$var$NullProtoObjectViaActiveX($ce89a7b1d333fb0bd78877ed8197b238$var$activeXDocument) : $ce89a7b1d333fb0bd78877ed8197b238$var$NullProtoObjectViaIFrame();
+    var length = $ce89a7b1d333fb0bd78877ed8197b238$import$f83336f12666caba$922d151aa119f6e9;
+    while(length--)delete $ce89a7b1d333fb0bd78877ed8197b238$var$NullProtoObject[$ce89a7b1d333fb0bd78877ed8197b238$var$PROTOTYPE][$ce89a7b1d333fb0bd78877ed8197b238$import$f83336f12666caba[length]];
+    return $ce89a7b1d333fb0bd78877ed8197b238$var$NullProtoObject();
+};
+$ce89a7b1d333fb0bd78877ed8197b238$import$d45197a06d41f191[$ce89a7b1d333fb0bd78877ed8197b238$var$IE_PROTO] = true;
+// `Object.create` method
+// https://tc39.es/ecma262/#sec-object.create
+$ce89a7b1d333fb0bd78877ed8197b238$exports = Object.create || function create(O, Properties) {
+    var result;
+    if (O !== null) {
+        $ce89a7b1d333fb0bd78877ed8197b238$var$EmptyConstructor[$ce89a7b1d333fb0bd78877ed8197b238$var$PROTOTYPE] = $ce89a7b1d333fb0bd78877ed8197b238$import$cad8ba314ee735d6(O);
+        result = new $ce89a7b1d333fb0bd78877ed8197b238$var$EmptyConstructor();
+        $ce89a7b1d333fb0bd78877ed8197b238$var$EmptyConstructor[$ce89a7b1d333fb0bd78877ed8197b238$var$PROTOTYPE] = null;
+        // add "__proto__" for Object.getPrototypeOf polyfill
+        result[$ce89a7b1d333fb0bd78877ed8197b238$var$IE_PROTO] = O;
+    } else result = $ce89a7b1d333fb0bd78877ed8197b238$var$NullProtoObject();
+    return Properties === undefined ? result : $ce89a7b1d333fb0bd78877ed8197b238$import$e2e41dc05e8a9d6d(result, Properties);
+};

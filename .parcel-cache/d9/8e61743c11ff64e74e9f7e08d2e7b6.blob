@@ -1,0 +1,12 @@
+import   "c1ddd84498e191c06080e834842b4195:../internals/descriptors";
+import   "c1ddd84498e191c06080e834842b4195:../internals/fails";
+import   "c1ddd84498e191c06080e834842b4195:../internals/document-create-element";
+// Thank's IE8 for his funny defineProperty
+$c1ddd84498e191c06080e834842b4195$exports = !$c1ddd84498e191c06080e834842b4195$import$9e95520c426f46b4 && !$c1ddd84498e191c06080e834842b4195$import$9936d02511e757dc(function() {
+    // eslint-disable-next-line es/no-object-defineproperty -- requied for testing
+    return Object.defineProperty($c1ddd84498e191c06080e834842b4195$import$62968a6197bf3a('div'), 'a', {
+        get: function() {
+            return 7;
+        }
+    }).a != 7;
+});

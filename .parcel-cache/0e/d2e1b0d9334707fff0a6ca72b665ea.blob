@@ -1,0 +1,8 @@
+$45d7e5ba9f349fea3bd4fde4af690ef8$exports = function(bitmap, value) {
+    return {
+        enumerable: !(bitmap & 1),
+        configurable: !(bitmap & 2),
+        writable: !(bitmap & 4),
+        value: value
+    };
+};

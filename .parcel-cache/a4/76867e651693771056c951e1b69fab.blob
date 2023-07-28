@@ -1,0 +1,9 @@
+'use strict';
+import   "883d8a355615630786349f303f9219ce:../internals/to-primitive";
+import   "883d8a355615630786349f303f9219ce:../internals/object-define-property";
+import   "883d8a355615630786349f303f9219ce:../internals/create-property-descriptor";
+$883d8a355615630786349f303f9219ce$exports = function(object, key, value) {
+    var propertyKey = $883d8a355615630786349f303f9219ce$import$c0dc3853fdc9c45f(key);
+    if (propertyKey in object) $883d8a355615630786349f303f9219ce$import$4276e2046cfaee3b$ffb27d6bd8d1eb33(object, propertyKey, $883d8a355615630786349f303f9219ce$import$ec93b3e5f64a8991(0, value));
+    else object[propertyKey] = value;
+};

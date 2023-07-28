@@ -1,0 +1,49 @@
+import   "ddb22bcbb8548589e08f55e42ba23d6d:../internals/global";
+import   "ddb22bcbb8548589e08f55e42ba23d6d:../internals/object-get-own-property-descriptor";
+var $ddb22bcbb8548589e08f55e42ba23d6d$require$getOwnPropertyDescriptor = $ddb22bcbb8548589e08f55e42ba23d6d$import$671bedbe12b63e7d$ffb27d6bd8d1eb33;
+import   "ddb22bcbb8548589e08f55e42ba23d6d:../internals/create-non-enumerable-property";
+import   "ddb22bcbb8548589e08f55e42ba23d6d:../internals/redefine";
+import   "ddb22bcbb8548589e08f55e42ba23d6d:../internals/set-global";
+import   "ddb22bcbb8548589e08f55e42ba23d6d:../internals/copy-constructor-properties";
+import   "ddb22bcbb8548589e08f55e42ba23d6d:../internals/is-forced";
+/*
+  options.target      - name of the target object
+  options.global      - target is the global object
+  options.stat        - export as static methods of target
+  options.proto       - export as prototype methods of target
+  options.real        - real prototype method for the `pure` version
+  options.forced      - export even if the native feature is available
+  options.bind        - bind methods to the target, required for the `pure` version
+  options.wrap        - wrap constructors to preventing global pollution, required for the `pure` version
+  options.unsafe      - use the simple assignment of property instead of delete + defineProperty
+  options.sham        - add a flag to not completely full polyfills
+  options.enumerable  - export as enumerable property
+  options.noTargetGet - prevent calling a getter on target
+*/ $ddb22bcbb8548589e08f55e42ba23d6d$exports = function(options, source) {
+    var TARGET = options.target;
+    var GLOBAL = options.global;
+    var STATIC = options.stat;
+    var FORCED, target, key, targetProperty, sourceProperty, descriptor;
+    if (GLOBAL) target = $ddb22bcbb8548589e08f55e42ba23d6d$import$da678c04728da253;
+    else if (STATIC) target = $ddb22bcbb8548589e08f55e42ba23d6d$import$da678c04728da253[TARGET] || $ddb22bcbb8548589e08f55e42ba23d6d$import$47dc390bace821d3(TARGET, {
+    });
+    else target = ($ddb22bcbb8548589e08f55e42ba23d6d$import$da678c04728da253[TARGET] || {
+    }).prototype;
+    if (target) for(key in source){
+        sourceProperty = source[key];
+        if (options.noTargetGet) {
+            descriptor = $ddb22bcbb8548589e08f55e42ba23d6d$require$getOwnPropertyDescriptor(target, key);
+            targetProperty = descriptor && descriptor.value;
+        } else targetProperty = target[key];
+        FORCED = $ddb22bcbb8548589e08f55e42ba23d6d$import$6d4a6b2681f6fa01(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
+        // contained in target
+        if (!FORCED && targetProperty !== undefined) {
+            if (typeof sourceProperty === typeof targetProperty) continue;
+            $ddb22bcbb8548589e08f55e42ba23d6d$import$fc173994050a329b(sourceProperty, targetProperty);
+        }
+        // add a flag to not completely full polyfills
+        if (options.sham || targetProperty && targetProperty.sham) $ddb22bcbb8548589e08f55e42ba23d6d$import$ea4d2ea16a516be3(sourceProperty, 'sham', true);
+        // extend global
+        $ddb22bcbb8548589e08f55e42ba23d6d$import$715a1a2c44d923e3(target, key, sourceProperty, options);
+    }
+};

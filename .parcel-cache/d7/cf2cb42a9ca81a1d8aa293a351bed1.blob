@@ -1,0 +1,19 @@
+'use strict';
+import   "514281abfefc248e1c55b16a1ecc9503:../internals/iterators-core";
+var $514281abfefc248e1c55b16a1ecc9503$require$IteratorPrototype = $514281abfefc248e1c55b16a1ecc9503$import$ed1ded2d6999d0ce$13771aba74baa34d;
+import   "514281abfefc248e1c55b16a1ecc9503:../internals/object-create";
+import   "514281abfefc248e1c55b16a1ecc9503:../internals/create-property-descriptor";
+import   "514281abfefc248e1c55b16a1ecc9503:../internals/set-to-string-tag";
+import   "514281abfefc248e1c55b16a1ecc9503:../internals/iterators";
+var $514281abfefc248e1c55b16a1ecc9503$var$returnThis = function() {
+    return this;
+};
+$514281abfefc248e1c55b16a1ecc9503$exports = function(IteratorConstructor, NAME, next) {
+    var TO_STRING_TAG = NAME + ' Iterator';
+    IteratorConstructor.prototype = $514281abfefc248e1c55b16a1ecc9503$import$d8db146559ed3979($514281abfefc248e1c55b16a1ecc9503$require$IteratorPrototype, {
+        next: $514281abfefc248e1c55b16a1ecc9503$import$ec93b3e5f64a8991(1, next)
+    });
+    $514281abfefc248e1c55b16a1ecc9503$import$c84072deb0264877(IteratorConstructor, TO_STRING_TAG, false, true);
+    $514281abfefc248e1c55b16a1ecc9503$import$617293915b6aef2[TO_STRING_TAG] = $514281abfefc248e1c55b16a1ecc9503$var$returnThis;
+    return IteratorConstructor;
+};

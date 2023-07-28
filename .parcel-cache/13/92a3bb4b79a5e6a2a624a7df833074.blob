@@ -1,0 +1,13 @@
+import   "e276330a859a57603d76cb582b646b56:../internals/is-object";
+// `ToPrimitive` abstract operation
+// https://tc39.es/ecma262/#sec-toprimitive
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+$e276330a859a57603d76cb582b646b56$exports = function(input, PREFERRED_STRING) {
+    if (!$e276330a859a57603d76cb582b646b56$import$9294ccec169e68b9(input)) return input;
+    var fn, val;
+    if (PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !$e276330a859a57603d76cb582b646b56$import$9294ccec169e68b9(val = fn.call(input))) return val;
+    if (typeof (fn = input.valueOf) == 'function' && !$e276330a859a57603d76cb582b646b56$import$9294ccec169e68b9(val = fn.call(input))) return val;
+    if (!PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !$e276330a859a57603d76cb582b646b56$import$9294ccec169e68b9(val = fn.call(input))) return val;
+    throw TypeError("Can't convert object to primitive value");
+};

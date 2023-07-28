@@ -1,0 +1,15 @@
+import   "fddbfe00d8aa7a7322451567a5385da9:../internals/has";
+import   "fddbfe00d8aa7a7322451567a5385da9:../internals/to-indexed-object";
+import   "fddbfe00d8aa7a7322451567a5385da9:../internals/array-includes";
+var $fddbfe00d8aa7a7322451567a5385da9$require$indexOf = $fddbfe00d8aa7a7322451567a5385da9$import$d824de73f032fddf$6afc34055cd595bd;
+import   "fddbfe00d8aa7a7322451567a5385da9:../internals/hidden-keys";
+$fddbfe00d8aa7a7322451567a5385da9$exports = function(object, names) {
+    var O = $fddbfe00d8aa7a7322451567a5385da9$import$73e80bdb170d55b7(object);
+    var i = 0;
+    var result = [];
+    var key;
+    for(key in O)!$fddbfe00d8aa7a7322451567a5385da9$import$7e2f6fc726b1debe($fddbfe00d8aa7a7322451567a5385da9$import$d45197a06d41f191, key) && $fddbfe00d8aa7a7322451567a5385da9$import$7e2f6fc726b1debe(O, key) && result.push(key);
+    // Don't enum bug & hidden keys
+    while(names.length > i)if ($fddbfe00d8aa7a7322451567a5385da9$import$7e2f6fc726b1debe(O, key = names[i++])) ~$fddbfe00d8aa7a7322451567a5385da9$require$indexOf(result, key) || result.push(key);
+    return result;
+};
