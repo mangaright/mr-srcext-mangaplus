@@ -1,16 +1,17 @@
 {
-  "name": "mm-src-template",
+  "name": "mm-src-mangaplus",
   "scripts": {
     "start": "parcel serve ./src/index.js",
     "build-dev": "parcel build ./src/index.js --no-source-maps --global mangaMan --no-minify",
     "build": "parcel build ./src/index.js --no-source-maps --global mangaMan",
     "flow": "flow"
   },
+  "main": "src/index.js",
   "browserlists": [
     "last 2 iOS major versions"
   ],
   "keywords": [
-    "mangaman-source"
+    "mangaright-source"
   ],
   "devDependencies": {
     "@babel/preset-flow": "^7.22.5",
@@ -21,11 +22,11 @@
     "node-fetch": "2",
     "parcel": "<2.0.0",
     "parcel-bundler": "^1.12.5",
-    "regenerator-runtime": "^0.11.1"
+    "regenerator-runtime": "^0.11.1",
+    "yarn": "^1.22.19"
   },
   "dependencies": {
     "core-js": "^3.31.1",
-    "fastest-levenshtein": "^1.0.16",
-    "yarn": "^1.22.19"
+    "fastest-levenshtein": "^1.0.16"
   }
 }
