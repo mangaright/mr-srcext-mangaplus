@@ -1,10 +1,13 @@
 // @flow
 // 
 import "core-js/features/url";
+import "core-js/actual/atob";
+import "core-js/actual/btoa";
+import "core-js/actual/typed-array/uint8-array";
 
 const { distance } = require('fastest-levenshtein')
 
-export let EXTENSION_ID="641c55ca-ff9b-4279-9278-fd304aba6aad";
+export let EXTENSION_ID = "641c55ca-ff9b-4279-9278-fd304aba6aad";
 
 class ChapterListItem {
     number: string;
@@ -170,8 +173,9 @@ class MangaSeriesList {
 const baseUrl = "https://jumpg-webapi.tokyo-cdn.com/api"
 
 function filterManga(query: string, mangaList: Array<MangaSeries>): Array<MangaSeries> {
-    const distances = mangaList.map(x => [distance(query, x.name), x]);
-    const top3 = distances.sort((x, y) => x[0] - y[0]).slice(0, 3);
+    const lowerQuery = query.toLowerCase();
+    const distances = mangaList.map(x => [distance(lowerQuery, x.name.toLowerCase()), x]);
+    const top3 = distances.sort((x, y) => x[0] - y[0]).slice(0, 5);
     return top3.map((x, i) => {
         let item = x[1];
         item.ranking = i;
@@ -202,8 +206,8 @@ export async function searchManga(seriesName: string): Promise<MangaSeriesList> 
         }
 
         const newSeries = new MangaSeries({
-            identifier: engTitle.titleId,
-            name: data.theTitle,
+            identifier: String(engTitle.titleId),
+            name: engTitle.name,
             coverUrl: engTitle.portraitImageUrl,
         });
         return newSeries;
@@ -212,7 +216,7 @@ export async function searchManga(seriesName: string): Promise<MangaSeriesList> 
     const filtered = filterManga(seriesName, formatted);
 
     return new MangaSeriesList({
-        results: filtered,
+        results: formatted,
     });
 }
 
@@ -233,32 +237,39 @@ export async function listChapters(seriesIdentifier: string): Promise<ChapterLis
 
     const chapGroups = json.success.titleDetailView.chapterListGroup;
 
-    const allChaps = chapGroups.flatMap(item => {
-        let availChaps: Array<Array<{
+    const allChaps:
+        Array<Array<{
             name: string,
             startTimeStamp: number,
             chapterId: number,
             subTitle: string,
-        }>> = [];
-        if (item.firstChapterList) {
-            availChaps = availChaps.concat(item.firstChapterList);
-        }
-        if (item.midChapterList) {
-            availChaps = availChaps.concat(item.midChapterList);
-        }
-        if (item.lastChapterList) {
-            availChaps = availChaps.concat(item.lastChapterList);
-        }
+        }>> = chapGroups.reduce((accum, item) => {
+            let availChaps: Array<Array<{
+                name: string,
+                startTimeStamp: number,
+                chapterId: number,
+                subTitle: string,
+            }>> = [];
+            if (item.firstChapterList) {
+                availChaps = availChaps.concat(item.firstChapterList);
+            }
+            if (item.midChapterList) {
+                availChaps = availChaps.concat(item.midChapterList);
+            }
+            if (item.lastChapterList) {
+                availChaps = availChaps.concat(item.lastChapterList);
+            }
 
-        return availChaps;
-    });
+            return accum.concat(availChaps);
+        }, []);
 
     const formatted = allChaps.map(data => {
         const number = data.name.replace("#", "");
         const startDate = new Date(data.startTimeStamp * 1000);
+        const identifier = String(data.chapterId);
 
         return new ChapterListItem({
-            identifier: data.chapterId,
+            identifier: identifier,
             title: data.subTitle,
             number: number,
             created: startDate,
@@ -274,15 +285,41 @@ export async function listChapters(seriesIdentifier: string): Promise<ChapterLis
     return chapList;
 }
 
-function xorDecrypt(key: string, data: string): string {
-    const length = key.length;
-    let decrypted = [];
-    for (let i = 0; i < data.length; i++) {
-        const c = data.charCodeAt(i);
-        const ec = key.charCodeAt(i % length);
-        decrypted.push(String.fromCharCode(c ^ ec));
+function hexToBinary(hexString: string): Uint8Array {
+    let binString = new Uint8Array(hexString.length / 2);
+    for (let i = 0; i < hexString.length; i += 2) {
+        const hex = hexString.slice(i, Math.min(i + 2, hexString.length));
+        const decimal = parseInt(hex, 16);
+        binString[i / 2] = decimal;
     }
-    return decrypted.join("");
+    return binString;
+}
+
+function base64ToArrayBuffer(base64: string): Uint8Array {
+    var binaryString = atob(base64);
+    var bytes = new Uint8Array(binaryString.length);
+    for (var i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
+}
+
+function xorDecrypt(key: string, data: string): string {
+    const rawData: Uint8Array = base64ToArrayBuffer(data);
+    const rawKey: Uint8Array = hexToBinary(key);
+    console.debug("Decrypting manga page.", {
+        key,
+        rawKey,
+        firstFour: data.slice(0, 4),
+        firstFourRaw: rawData.slice(0, 4),
+    });
+    const keyLength = rawKey.length;
+    let decrypted = rawData;
+    for (let i = 0; i < decrypted.length; i++) {
+        decrypted[i] ^= rawKey[i % keyLength];
+    }
+    console.debug("Decrypted manga page.");
+    return Buffer.from(decrypted).toString("base64");
 }
 
 export async function getChapter(chapterIdentifier: string): Promise<ChapterData> {
@@ -331,15 +368,8 @@ export async function getChapter(chapterIdentifier: string): Promise<ChapterData
         })
     }
 
-    // const allPages = highPages.map((page, i) => ({
-    //     high: page.mangaPage,
-    //     low: json.success.mangaViewer.pages[i].mangaPage,
-    // }));
-
-    // console.log(allPages);
     const pageDatas = allPages.map((pages) => {
-        // console.log(pages);
-        const {low, high} = pages;
+        const { low, high } = pages;
         const highUrl = high.imageUrl;
         const lowUrl = low.imageUrl;
         const highHandler = (pageData: string) => xorDecrypt(high.encryptionKey, pageData);
@@ -352,25 +382,6 @@ export async function getChapter(chapterIdentifier: string): Promise<ChapterData
             lowHandler,
         });
     });
-
-
-    // const highData = allPages.reduce((accum, nextPage) => {
-    //     const page = nextPage.mangaPage;
-    //     if (!page) {
-    //         return accum;
-    //     }
-
-    //     const encryptionKey = page.encryptionKey;
-
-    //     return accum.concat([[
-    //         page.imageUrl,
-    //         (pageData: string) => xorDecrypt(encryptionKey, pageData)
-    //     ]]);
-    // }, []);
-
-    // const pages = highData.map(pageData => (
-    //     new PageData({ highUrl: pageData[0], highHandler: pageData[1] })
-    // ));
 
     const chapterData = new ChapterData({ pages: pageDatas });
     return chapterData;
