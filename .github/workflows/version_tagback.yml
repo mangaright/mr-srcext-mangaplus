@@ -1,0 +1,37 @@
+name: Tag Version on Metadata Change
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  check_metadata:
+    steps:
+    - name: Read Version
+      uses: SebRollen/toml-action@v1.0.2
+      id: read_toml
+      with:
+        file: 'mrextmeta.toml'
+        field: 'extension.version'
+    - name: Find Matching Tag
+      id: tagger
+      uses: jimschubert/query-tag-action@v1
+      with:
+        include: 'v${{steps.read_toml.outputs.value}}'
+    - name: Validate Version
+      run: |
+          [ -x "${{steps.tagger.outputs.tag}}" ] \
+          && echo "NEEDS_TAG=1" >> "$GITHUB_ENV" \
+          && echo "EXTENSION_VERSION=v${{steps.read_toml.outputs.value}}" >> "$GITHUB_ENV"
+
+  tag_version:
+      if: ${{ env.NEEDS_TAG == '1' }}
+      steps:
+      - uses: actions/checkout@v2
+      - name: Tag Version
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          custom_tag: "${{ env.EXTENSION_VERSION }}"
