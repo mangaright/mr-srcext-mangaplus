@@ -18,7 +18,7 @@ jobs:
       id: read_toml
       with:
         file: 'mrextmeta.toml'
-        field: 'extension.version'
+        field: 'plugin.version'
     - name: Find Matching Tag
       id: tagger
       uses: jimschubert/query-tag-action@v1
