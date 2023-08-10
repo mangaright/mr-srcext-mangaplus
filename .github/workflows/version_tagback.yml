@@ -28,8 +28,10 @@ jobs:
     - name: Validate Version
       id: validate_version
       run: |
-          [ -x "${{steps.tagger.outputs.tag}}" ] \
-          && echo "should_tag=1" >> "$GITHUB_OUTPUT"
+          if [ -x "${{steps.tagger.outputs.tag}}" ]; then \
+          echo "should_tag=1" >> "$GITHUB_OUTPUT"; else \
+          echo "should_tag=0" >> "$GITHUB_OUTPUT"; fi
+
 
   tag_version:
     runs-on: ubuntu-latest
