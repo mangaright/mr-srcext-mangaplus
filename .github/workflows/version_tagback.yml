@@ -18,10 +18,11 @@ jobs:
       id: read_toml
       with:
         file: 'mrextmeta.toml'
-        field: 'plugin.version'
+        field: 'plugin.general.version'
     - name: Find Matching Tag
       id: tagger
       uses: jimschubert/query-tag-action@v1
+      continue-on-error: true
       with:
         include: 'v${{steps.read_toml.outputs.value}}'
     - name: Validate Version
