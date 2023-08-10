@@ -12,6 +12,7 @@ jobs:
       should_tag: ${{ steps.validate_version.outputs.should_tag }}
       tag_version: ${{ steps.read_toml.outputs.value }}
     steps:
+    - uses: actions/checkout@v2
     - name: Read Version
       uses: SebRollen/toml-action@v1.0.2
       id: read_toml
