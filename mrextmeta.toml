@@ -1,3 +1,13 @@
-name = "Manga Plus"
+[plugin]
+
+id = "641c55ca-ff9b-4279-9278-fd304aba6aad"
+
+[plugin.name]
+primary = "Manga Plus"
+aliases = ["MangaPlus"]
+
+[plugin.general]
 version = "1.1.1"
 author = "MangaRight"
+
+mangaright = "1.0.0"

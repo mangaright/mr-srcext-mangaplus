@@ -1,9 +1,11 @@
 // @flow
 // 
-import "core-js/features/url";
+import "core-js/actual/url";
 import "core-js/actual/atob";
 import "core-js/actual/btoa";
 import "core-js/actual/typed-array/uint8-array";
+import "core-js/actual/set-timeout"
+import "core-js/actual/set-interval"
 
 const { distance } = require('fastest-levenshtein')
 
