@@ -1,3 +1,5 @@
+mangaright = "1.0.0"
+
 [plugin]
 
 id = "641c55ca-ff9b-4279-9278-fd304aba6aad"
@@ -7,7 +9,5 @@ primary = "Manga Plus"
 aliases = ["MangaPlus"]
 
 [plugin.general]
-version = "2.0.1"
+version = "2.0.2"
 author = "MangaRight"
-
-mangaright = "1.0.0"
